@@ -4,12 +4,13 @@ import java.util.Scanner;
 
 import br.com.bryan.senac.classes.Cliente;
 
+//Classe do Menu do Cliente
 public class MenuCliente {
 
-    static Scanner e = new Scanner(System.in);
-
+    //Método Menu Cliente
     @SuppressWarnings("static-access")
     public static void menuCliente() {
+        Scanner e = new Scanner(System.in);
         Cliente cliente = new Cliente();
         MenuPrincipal voltar = new MenuPrincipal();
         String mCliente = "\n=========================";
@@ -21,10 +22,9 @@ public class MenuCliente {
         mCliente += "\n4- Excluir Cliente";
         mCliente += "\n5- Voltar";
         mCliente += "\n   Escolha: ";
-        boolean sair = true;
         System.out.println(mCliente);
         int opcao = e.nextInt();
-        while (sair) {
+        while (true) {
             switch (opcao) {
                 case 1:
                     cliente.cadastrarCliente();
@@ -45,7 +45,6 @@ public class MenuCliente {
                     System.out.println("Opção Inválida");
                     break;
             }
-
         }
     }
 }

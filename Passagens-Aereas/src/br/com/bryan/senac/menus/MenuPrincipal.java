@@ -3,19 +3,20 @@ package br.com.bryan.senac.menus;
 import br.com.bryan.senac.venda.Venda;
 import java.util.Scanner;
 
+//Classe do Menu Principal do Programa
 public class MenuPrincipal {
-
-    static Scanner e = new Scanner(System.in);
-
+    
+    //Método do menu principal
     @SuppressWarnings({"static-access"})
     public static void menuPrincipal() {
+        Scanner e = new Scanner(System.in);
         MenuCliente mc = new MenuCliente();
         MenuAviao ma = new MenuAviao();
         MenuVoo mv = new MenuVoo();
         Venda vd = new Venda();
-        String menu = "\n=================================";
-        menu += "\nControle de Vendas de Passagens Aéreas";
-        menu += "\n=================================";
+        String menu = "\n===========================================";
+        menu += "\n>>>Controle de Vendas de Passagens Aéreas<<<";
+        menu += "\n===========================================";
         menu += "\nDentre as seguintes opções disponíveis:";
         menu += "\n1- Cadastro de Clientes";
         menu += "\n2- Cadastro de Aviões";
@@ -24,10 +25,9 @@ public class MenuPrincipal {
         menu += "\n5- Relatório da Venda";
         menu += "\n6- Sair";
         menu += "\n   Escolha qual deseja acessar: ";
-        boolean sair = true;
         System.out.println(menu);
         int op = e.nextInt();
-        while (sair) {
+        while (true) {
             switch (op) {
                 case 1:
                     mc.menuCliente();
@@ -45,7 +45,7 @@ public class MenuPrincipal {
                     //Relatorio.main(args);
                     break;
                 case 6:
-                    System.exit(6);
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Opção Inválida");

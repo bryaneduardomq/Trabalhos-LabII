@@ -1,9 +1,10 @@
 package br.com.bryan.senac.classes;
 
+import br.com.bryan.senac.menus.MenuCliente;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import br.com.bryan.senac.menus.MenuCliente;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Cliente {
 
@@ -14,13 +15,6 @@ public class Cliente {
 
     // Construtor Padrão
     public Cliente() {
-
-    }
-
-    public Cliente(String nome, int rg, String contato) {
-        this.nome = nome;
-        this.rg = rg;
-        this.contato = contato;
 
     }
 
@@ -49,15 +43,48 @@ public class Cliente {
         this.contato = contato;
     }
 
-    // Método Para Cadastrar Cliente, é referenciado na classe MenuCliente
+    // Método para cadastrar o cliente
     @SuppressWarnings("static-access")
     public static void cadastrarCliente() {
         Cliente c = new Cliente();
         MenuCliente m = new MenuCliente();
+        boolean valida = false;
 
-        c.nome = digita("Digite o nome do cliente: ");
-        c.rg = Integer.parseInt(digita("Digite o rg do cliente: "));
-        c.contato = digita("Digite o contato do cliente: ");
+        do {
+            c.nome = digita("Digite o nome do cliente: ");
+            Pattern padrao = Pattern.compile("[0-9]");
+            Matcher combinacao = padrao.matcher(c.getNome());
+            if (combinacao.find()) {
+                System.out.println("Não pode conter números!");
+            } else {
+                valida = true;
+            }
+
+        } while (valida == false);
+
+        do {
+            try {
+                c.rg = Integer.parseInt(digita("Digite o rg do cliente: "));
+                valida = true;
+            } catch (NumberFormatException ex) {
+                System.out.println("Erro: " + ex);
+                valida = false;
+            }
+
+        } while (valida == false);
+
+        do {
+            c.contato = digita("Digite o contato do cliente: ");
+            Pattern padrao = Pattern.compile("[a-zA-Z]");
+            Matcher combinacao = padrao.matcher(c.getContato());
+            if (combinacao.find()) {
+                System.out.println("Não pode conter letras!");
+                valida = false;
+            } else {
+                valida = true;
+            }
+
+        } while (valida == false);
 
         clientes.add(c);
 
@@ -75,31 +102,56 @@ public class Cliente {
             m.menuCliente();
         } else {
             for (Cliente c : clientes) {
+                System.out.println(">>>Cliente<<<");
                 System.out.println("Nome: " + c.getNome());
                 System.out.println("RG: " + c.getRg());
                 System.out.println("Contato: " + c.getContato());
-                System.out.println();
             }
             m.menuCliente();
         }
 
     }
 
-    // Método para atualizar os dados do Cliente 
+    // Método para atualizar os dados do cliente 
     @SuppressWarnings("static-access")
     public static void atualizarDadosCliente() {
         MenuCliente m = new MenuCliente();
+        boolean valida = false;
+        int rgAtualiza = 0;
+        int atualiza = 0;
+
         if (clientes.isEmpty()) {
             System.out.println("Cliente não cadastrado!!!");
             m.menuCliente();
         } else {
-            int rgAtualiza = Integer.parseInt(
-                    digita("Qual cliente gostaria de atualizar o cadastro? Digite o RG dele(a)"));
+            do {
+                try {
+                    rgAtualiza = Integer.parseInt(
+                            digita("Qual cliente gostaria de atualizar o cadastro? Digite o RG dele(a):"));
+                    valida = true;
+                } catch (NumberFormatException ex) {
+                    System.out.println("Erro: " + ex);
+                    valida = false;
+                }
+
+            } while (valida == false);
 
             for (int i = 0; i < clientes.size(); i++) {
                 if (rgAtualiza == clientes.get(i).getRg()) {
-                    int atualiza = Integer.parseInt(
-                            digita(("Digite o dado que deve ser alterado: 1 para nome, 2 para contato.")));
+                    do {
+                        try {
+                            atualiza = Integer.parseInt(
+                                    digita(("Digite o dado que deve ser alterado: 1 para nome, 2 para contato.")));
+                            valida = true;
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Erro: " + ex);
+                            valida = false;
+                        }
+
+                    } while (valida == false);
+
+                    System.out.println("Cliente encontrado!");
+
                     if (atualiza == 1) {
                         clientes.get(i).setNome(digita("Digite o nome: "));
                     }
@@ -116,16 +168,28 @@ public class Cliente {
         }
 
     }
-    
+
     //Método para excluir o cliente
     @SuppressWarnings("static-access")
     public static void excluirCliente() {
         MenuCliente m = new MenuCliente();
+        int rgExcluido = 0;
+        boolean valida = false;
         if (clientes.isEmpty()) {
             System.out.println("Cliente não cadastrado!!!");
             m.menuCliente();
         } else {
-            int rgExcluido = Integer.parseInt(digita("Digite o rg do cliente a ser excluído: "));
+            do {
+                try {
+                    rgExcluido = Integer.parseInt(digita("Digite o rg do cliente a ser excluído: "));
+                    valida = true;
+                } catch (NumberFormatException ex) {
+                    System.out.println("Erro: " + ex);
+                    valida = false;
+                }
+
+            } while (valida == false);
+
             for (int i = 0; i < clientes.size(); i++) {
                 if (rgExcluido == clientes.get(i).getRg()) {
                     clientes.remove(i);
@@ -147,7 +211,7 @@ public class Cliente {
         @SuppressWarnings("resource")
         Scanner e = new Scanner(System.in);
         System.out.println(mens);
-        return e.next();
+        return e.nextLine();
     }
 
 }

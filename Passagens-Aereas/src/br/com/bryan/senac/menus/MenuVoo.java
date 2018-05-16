@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 import br.com.bryan.senac.classes.Voo;
 
+//Método do menu de voos
 public class MenuVoo {
 
     static Scanner e = new Scanner(System.in);
 
+    //Menu de voos
     @SuppressWarnings("static-access")
     public static void menuVoo() {
         Voo voo = new Voo();
@@ -19,10 +21,9 @@ public class MenuVoo {
         mVoo += "\n2- Visualizar Total de Voos";
         mVoo += "\n3- Voltar";
         mVoo += "\n   Escolha: ";
-        boolean sair = true;
         System.out.println(mVoo);
         int opcao = e.nextInt();
-        while (sair) {
+        while (true) {
             switch (opcao) {
                 case 1:
                     voo.cadastrarVoo();

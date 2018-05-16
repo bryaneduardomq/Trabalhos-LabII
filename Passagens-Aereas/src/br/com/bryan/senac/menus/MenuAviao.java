@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 import br.com.bryan.senac.classes.Aviao;
 
+//Classe do menu de aviões
 public class MenuAviao {
 
     static Scanner e = new Scanner(System.in);
 
+    //Método menu avião
     @SuppressWarnings("static-access")
     public static void menuAviao() {
         Aviao aviao = new Aviao();
@@ -19,10 +21,9 @@ public class MenuAviao {
         mAviao += "\n2- Visualizar Frota de Aviões";
         mAviao += "\n3- Voltar";
         mAviao += "\n   Escolha: ";
-        boolean sair = true;
         System.out.println(mAviao);
         int opcao = e.nextInt();
-        while (sair) {
+        while (true) {
             switch (opcao) {
                 case 1:
                     aviao.cadastrarAviao();
