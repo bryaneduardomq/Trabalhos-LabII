@@ -42,7 +42,7 @@ public class Venda {
         String buscarDestino = null;
         boolean valida = false;
 
-        if (Cliente.clientes.isEmpty() && Aviao.avioes.isEmpty() && Voo.voos.isEmpty()) {
+        if (Cliente.clientes.isEmpty() || Aviao.avioes.isEmpty() || Voo.voos.isEmpty()) {
             System.out.println("Venda não pode ser realizada!");
             mp.menuPrincipal();
         } else {
@@ -80,6 +80,11 @@ public class Venda {
 
                     System.out.println("Trecho disponível!");
                     Voo.voos.get(i).setQuantidadeAssentos(Voo.voos.get(i).getQuantidadeAssentos() - 1);//Diminui a quantidade de assentos disponíveis no voo
+                    if (Voo.voos.get(i).getQuantidadeAssentos() == 0){
+                        System.out.println("Trecho não disponível!");
+                        mp.menuPrincipal();
+                    }
+                    
                     ven.voo = Voo.voos.get(i);
 
                     do {
@@ -103,7 +108,7 @@ public class Venda {
                         }
                     }
 
-                    System.out.println("Compra Realizada com Sucesso!!!");
+                    System.out.println("\nCompra Realizada com Sucesso!!!");
 
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date date = new Date(System.currentTimeMillis());
