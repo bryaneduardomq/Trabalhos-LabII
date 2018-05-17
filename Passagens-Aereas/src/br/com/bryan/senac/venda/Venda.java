@@ -18,7 +18,7 @@ public class Venda {
     private String horarioCompra;
     private Cliente cliente;
     private Voo voo;
-    private static ArrayList<Venda> vendas = new ArrayList<Venda>();
+    public static ArrayList<Venda> vendas = new ArrayList<Venda>();
 
     public String getHorarioCompra() {
         return horarioCompra;
@@ -80,11 +80,11 @@ public class Venda {
 
                     System.out.println("Trecho disponível!");
                     Voo.voos.get(i).setQuantidadeAssentos(Voo.voos.get(i).getQuantidadeAssentos() - 1);//Diminui a quantidade de assentos disponíveis no voo
-                    if (Voo.voos.get(i).getQuantidadeAssentos() == 0){
-                        System.out.println("Trecho não disponível!");
+                    if (Voo.voos.get(i).getQuantidadeAssentos() == 0) {
+                        System.out.println("Voo Lotado!");
                         mp.menuPrincipal();
                     }
-                    
+
                     ven.voo = Voo.voos.get(i);
 
                     do {

@@ -5,15 +5,11 @@ import java.util.Scanner;
 
 //Classe do Menu Principal do Programa
 public class MenuPrincipal {
-    
+
     //Método do menu principal
     @SuppressWarnings({"static-access"})
     public static void menuPrincipal() {
         Scanner e = new Scanner(System.in);
-        MenuCliente mc = new MenuCliente();
-        MenuAviao ma = new MenuAviao();
-        MenuVoo mv = new MenuVoo();
-        Venda vd = new Venda();
         String menu = "\n===========================================";
         menu += "\n>>>Controle de Vendas de Passagens Aéreas<<<";
         menu += "\n===========================================";
@@ -22,7 +18,7 @@ public class MenuPrincipal {
         menu += "\n2- Cadastro de Aviões";
         menu += "\n3- Cadastro de Voos";
         menu += "\n4- Venda de Passagens Aéreas";
-        menu += "\n5- Relatório da Venda";
+        menu += "\n5- Relatórios";
         menu += "\n6- Sair";
         menu += "\n   Escolha qual deseja acessar: ";
         System.out.println(menu);
@@ -30,19 +26,19 @@ public class MenuPrincipal {
         while (true) {
             switch (op) {
                 case 1:
-                    mc.menuCliente();
+                    MenuCliente.menuCliente();
                     break;
                 case 2:
-                    ma.menuAviao();
+                    MenuAviao.menuAviao();
                     break;
                 case 3:
-                    mv.menuVoo();
+                    MenuVoo.menuVoo();
                     break;
                 case 4:
-                    vd.realizarVenda();
+                    Venda.realizarVenda();
                     break;
                 case 5:
-                    //Relatorio.main(args);
+                    MenuRelatorio.menuRelatorio();
                     break;
                 case 6:
                     System.exit(0);

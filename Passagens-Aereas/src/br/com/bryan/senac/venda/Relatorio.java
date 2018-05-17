@@ -1,24 +1,27 @@
 package br.com.bryan.senac.venda;
 
+//import br.com.bryan.senac.classes.Cliente;
+//import br.com.bryan.senac.menus.MenuPrincipal;
+
+//Deixado para desenvolvimento futuro
 public class Relatorio {
 
-	private static void relatorioPorCliente() {
-            
-	}
+    public static void relatorioPorCliente() {
+    }
 
-	private static void relatorioPorPassageiros() {
+    public static void relatorioPorPassageiros() {
 
-	}
+    }
 
-	private static void relatorioPorOrigem() {
+    public static void relatorioPorOrigem() {
 
-	}
+    }
 
-	private static void relatorioPorDestino() {
+    public static void relatorioPorDestino() {
 
-	}
+    }
 
-	private static void relatorioPorVoos() {
+    public static void relatorioPorVoos() {
 
-	}
+    }
 }

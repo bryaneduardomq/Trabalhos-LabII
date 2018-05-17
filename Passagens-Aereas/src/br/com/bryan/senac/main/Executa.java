@@ -7,11 +7,8 @@ public class Executa {
 
     @SuppressWarnings("static-access")
     public static void main(String[] args) {
-        // Instância do objeto
-        MenuPrincipal ini = new MenuPrincipal();
-
         // Iniciar o programa
-        ini.menuPrincipal();
+        MenuPrincipal.menuPrincipal();
 
     }
 
