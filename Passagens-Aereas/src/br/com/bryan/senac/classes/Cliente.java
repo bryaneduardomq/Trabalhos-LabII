@@ -64,8 +64,18 @@ public class Cliente {
 
         do {
             try {
-                c.rg = Integer.parseInt(digita("Digite o rg do cliente: "));
-                valida = true;
+                boolean verificacao = true;
+
+                while (verificacao == true) {
+                    verificacao = verifica(c.rg = Integer.parseInt(digita("Digite o rg do cliente: ")));
+                    if (verificacao == true) {
+                        System.out.println("ERRO NESSA CASSETA");
+                    } else {
+                        valida = true;
+                    }
+
+                }
+
             } catch (NumberFormatException ex) {
                 System.out.println("Erro: " + ex);
                 valida = false;
@@ -204,6 +214,18 @@ public class Cliente {
             m.menuCliente();
         }
 
+    }
+
+    private static boolean verifica(int rg) {
+        boolean rgDuplicado = false;
+
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).getRg() == rg) {
+                rgDuplicado = true;
+            }
+        }
+
+        return rgDuplicado;
     }
 
     // Método para facilitar a digitação de dados
