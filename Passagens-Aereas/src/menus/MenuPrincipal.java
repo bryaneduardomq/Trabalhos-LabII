@@ -1,6 +1,6 @@
-package br.com.bryan.senac.menus;
+package menus;
 
-import br.com.bryan.senac.venda.Venda;
+import venda.Venda;
 import java.util.Scanner;
 
 //Classe do Menu Principal do Programa

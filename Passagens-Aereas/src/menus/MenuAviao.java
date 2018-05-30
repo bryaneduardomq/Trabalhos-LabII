@@ -1,8 +1,8 @@
-package br.com.bryan.senac.menus;
+package menus;
 
 import java.util.Scanner;
 
-import br.com.bryan.senac.classes.Aviao;
+import classes.Aviao;
 
 //Classe do menu de aviões
 public class MenuAviao {

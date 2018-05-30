@@ -1,8 +1,8 @@
-package br.com.bryan.senac.menus;
+package menus;
 
 import java.util.Scanner;
 
-import br.com.bryan.senac.classes.Cliente;
+import classes.Cliente;
 
 //Classe do Menu do Cliente
 public class MenuCliente {

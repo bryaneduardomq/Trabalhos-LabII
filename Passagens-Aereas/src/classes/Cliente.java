@@ -1,6 +1,6 @@
-package br.com.bryan.senac.classes;
+package classes;
 
-import br.com.bryan.senac.menus.MenuCliente;
+import menus.MenuCliente;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -67,7 +67,7 @@ public class Cliente {
                 boolean verificacao = true;
 
                 while (verificacao == true) {
-                    verificacao = verifica(c.rg = Integer.parseInt(digita("Digite o rg do cliente: ")));
+                    verificacao = verificaRepetido(c.rg = Integer.parseInt(digita("Digite o rg do cliente: ")));
                     if (verificacao == true) {
                         System.out.println("ERRO NESSA CASSETA");
                     } else {
@@ -216,7 +216,7 @@ public class Cliente {
 
     }
 
-    private static boolean verifica(int rg) {
+    private static boolean verificaRepetido(int rg) {
         boolean rgDuplicado = false;
 
         for (int i = 0; i < clientes.size(); i++) {

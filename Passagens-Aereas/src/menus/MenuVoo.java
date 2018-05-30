@@ -1,8 +1,8 @@
-package br.com.bryan.senac.menus;
+package menus;
 
 import java.util.Scanner;
 
-import br.com.bryan.senac.classes.Voo;
+import classes.Voo;
 
 //Método do menu de voos
 public class MenuVoo {

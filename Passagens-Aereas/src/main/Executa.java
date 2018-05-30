@@ -1,6 +1,6 @@
-package br.com.bryan.senac.main;
+package main;
 
-import br.com.bryan.senac.menus.MenuPrincipal;
+import menus.MenuPrincipal;
 
 //Classe de início do programa
 public class Executa {

@@ -1,4 +1,4 @@
-package br.com.bryan.senac.menus;
+package menus;
 
 //import br.com.bryan.senac.venda.Relatorio;
 import java.util.Scanner;

@@ -1,9 +1,9 @@
-package br.com.bryan.senac.venda;
+package venda;
 
-import br.com.bryan.senac.classes.Aviao;
-import br.com.bryan.senac.classes.Cliente;
-import br.com.bryan.senac.classes.Voo;
-import br.com.bryan.senac.menus.MenuPrincipal;
+import classes.Aviao;
+import classes.Cliente;
+import classes.Voo;
+import menus.MenuPrincipal;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.Date;

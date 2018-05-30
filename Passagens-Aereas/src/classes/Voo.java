@@ -1,6 +1,6 @@
-package br.com.bryan.senac.classes;
+package classes;
 
-import br.com.bryan.senac.menus.MenuVoo;
+import menus.MenuVoo;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
