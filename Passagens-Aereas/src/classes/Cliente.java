@@ -47,7 +47,6 @@ public class Cliente {
     @SuppressWarnings("static-access")
     public static void cadastrarCliente() {
         Cliente c = new Cliente();
-        MenuCliente m = new MenuCliente();
         boolean valida = false;
 
         do {
@@ -69,7 +68,7 @@ public class Cliente {
                 while (verificacao == true) {
                     verificacao = verificaRepetido(c.rg = Integer.parseInt(digita("Digite o rg do cliente: ")));
                     if (verificacao == true) {
-                        System.out.println("ERRO NESSA CASSETA");
+                        System.out.println("ERRO");
                     } else {
                         valida = true;
                     }
@@ -98,18 +97,16 @@ public class Cliente {
 
         clientes.add(c);
 
-        m.menuCliente();
+        MenuCliente.menuCliente();
 
     }
 
     // Método para visualização dos clientes cadastrados
     @SuppressWarnings("static-access")
     public static void visualizarClientes() {
-        MenuCliente m = new MenuCliente();
-
         if (clientes.isEmpty()) {
             System.out.println("Nenhum Cliente Cadastrado!!!");
-            m.menuCliente();
+            MenuCliente.menuCliente();
         } else {
             for (Cliente c : clientes) {
                 System.out.println(">>>Cliente<<<");
@@ -117,7 +114,7 @@ public class Cliente {
                 System.out.println("RG: " + c.getRg());
                 System.out.println("Contato: " + c.getContato());
             }
-            m.menuCliente();
+            MenuCliente.menuCliente();
         }
 
     }
@@ -125,14 +122,13 @@ public class Cliente {
     // Método para atualizar os dados do cliente 
     @SuppressWarnings("static-access")
     public static void atualizarDadosCliente() {
-        MenuCliente m = new MenuCliente();
         boolean valida = false;
         int rgAtualiza = 0;
         int atualiza = 0;
 
         if (clientes.isEmpty()) {
             System.out.println("Cliente não cadastrado!!!");
-            m.menuCliente();
+            MenuCliente.menuCliente();
         } else {
             do {
                 try {
@@ -171,10 +167,10 @@ public class Cliente {
 
                 } else {
                     System.out.println("RG não cadastrado!");
-                    m.menuCliente();
+                    MenuCliente.menuCliente();
                 }
             }
-            m.menuCliente();
+            MenuCliente.menuCliente();
         }
 
     }
@@ -182,12 +178,11 @@ public class Cliente {
     //Método para excluir o cliente
     @SuppressWarnings("static-access")
     public static void excluirCliente() {
-        MenuCliente m = new MenuCliente();
         int rgExcluido = 0;
         boolean valida = false;
         if (clientes.isEmpty()) {
             System.out.println("Cliente não cadastrado!!!");
-            m.menuCliente();
+            MenuCliente.menuCliente();
         } else {
             do {
                 try {
@@ -204,14 +199,14 @@ public class Cliente {
                 if (rgExcluido == clientes.get(i).getRg()) {
                     clientes.remove(i);
                     System.out.println("Cliente Excluído!!!");
-                    m.menuCliente();
+                    MenuCliente.menuCliente();
                 } else {
                     System.out.println("RG não cadastrado!!!");
-                    m.menuCliente();
+                    MenuCliente.menuCliente();
                 }
 
             }
-            m.menuCliente();
+            MenuCliente.menuCliente();
         }
 
     }
