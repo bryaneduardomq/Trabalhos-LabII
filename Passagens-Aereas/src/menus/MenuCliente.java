@@ -2,7 +2,7 @@ package menus;
 
 import java.util.Scanner;
 
-import classes.Cliente;
+import entidades.Cliente;
 
 //Classe do Menu do Cliente
 public class MenuCliente {

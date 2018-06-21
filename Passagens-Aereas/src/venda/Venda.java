@@ -1,8 +1,8 @@
 package venda;
 
-import classes.Aviao;
-import classes.Cliente;
-import classes.Voo;
+import entidades.Aviao;
+import entidades.Cliente;
+import entidades.Voo;
 import menus.MenuPrincipal;
 import java.util.ArrayList;
 import java.util.Scanner;

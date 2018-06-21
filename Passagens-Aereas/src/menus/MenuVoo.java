@@ -2,7 +2,7 @@ package menus;
 
 import java.util.Scanner;
 
-import classes.Voo;
+import entidades.Voo;
 
 //Método do menu de voos
 public class MenuVoo {

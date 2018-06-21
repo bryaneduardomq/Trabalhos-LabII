@@ -2,7 +2,7 @@ package menus;
 
 import java.util.Scanner;
 
-import classes.Aviao;
+import entidades.Aviao;
 
 //Classe do menu de aviões
 public class MenuAviao {

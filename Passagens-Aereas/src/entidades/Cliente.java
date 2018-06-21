@@ -1,10 +1,12 @@
-package classes;
+package entidades;
 
 import menus.MenuCliente;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import jdbc.ClienteDAO;
 
 public class Cliente {
 
@@ -50,18 +52,6 @@ public class Cliente {
         boolean valida = false;
 
         do {
-            c.nome = digita("Digite o nome do cliente: ");
-            Pattern padrao = Pattern.compile("[0-9]");
-            Matcher combinacao = padrao.matcher(c.getNome());
-            if (combinacao.find()) {
-                System.out.println("Não pode conter números!");
-            } else {
-                valida = true;
-            }
-
-        } while (valida == false);
-
-        do {
             try {
                 boolean verificacao = true;
 
@@ -83,6 +73,18 @@ public class Cliente {
         } while (valida == false);
 
         do {
+            c.nome = digita("Digite o nome do cliente: ");
+            Pattern padrao = Pattern.compile("[0-9]");
+            Matcher combinacao = padrao.matcher(c.getNome());
+            if (combinacao.find()) {
+                System.out.println("Não pode conter números!");
+            } else {
+                valida = true;
+            }
+
+        } while (valida == false);
+
+        do {
             c.contato = digita("Digite o contato do cliente: ");
             Pattern padrao = Pattern.compile("[a-zA-Z]");
             Matcher combinacao = padrao.matcher(c.getContato());
@@ -94,9 +96,11 @@ public class Cliente {
             }
 
         } while (valida == false);
+        
+        ClienteDAO clDAO = new ClienteDAO();
+        clDAO.insert(c);
 
-        clientes.add(c);
-
+        //clientes.add(c);
         MenuCliente.menuCliente();
 
     }
