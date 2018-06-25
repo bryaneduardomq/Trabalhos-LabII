@@ -1,10 +1,10 @@
-package entidades;
+package model;
 
-import menus.MenuVoo;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import view.Menu;
 
 //Classe Voo
 public class Voo {
@@ -61,7 +61,6 @@ public class Voo {
     @SuppressWarnings("static-access")
     public static void cadastrarVoo() {
         Voo v = new Voo();
-        MenuVoo mv = new MenuVoo();
         boolean valida = false;
         int cod = 0;
 
@@ -111,20 +110,18 @@ public class Voo {
                 voos.add(v);
             } else {
                 System.out.println("Avião não cadastrado");
-                mv.menuVoo();
+                Menu.menuVoo();
             }
         }
-        mv.menuVoo();
+        Menu.menuVoo();
     }
 
     //Método para visualizar dados do voo
     @SuppressWarnings("static-access")
     public static void visualizarVoo() {
-        MenuVoo mv = new MenuVoo();
-
         if (voos.isEmpty()) {
             System.out.println("Nenhum Voo Cadastrado!!!");
-            mv.menuVoo();
+            Menu.menuVoo();
         } else {
             for (Voo v : voos) {
                 System.out.println(">>>VOO<<<");
@@ -136,7 +133,7 @@ public class Voo {
                         + v.getAviao().getQtAssentos());//Arrumar
             }
         }
-        mv.menuVoo();
+        Menu.menuVoo();
     }
 
     private static String digita(String mens) {

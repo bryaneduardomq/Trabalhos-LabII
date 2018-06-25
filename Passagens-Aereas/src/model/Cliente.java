@@ -1,12 +1,13 @@
-package entidades;
+package model;
 
-import menus.MenuCliente;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jdbc.ClienteDAO;
+import model.DAO.ClienteDAO;
+import java.util.List;
+import view.Menu;
 
 public class Cliente {
 
@@ -96,29 +97,32 @@ public class Cliente {
             }
 
         } while (valida == false);
-        
+
         ClienteDAO clDAO = new ClienteDAO();
         clDAO.insert(c);
 
         //clientes.add(c);
-        MenuCliente.menuCliente();
+        Menu.menuCliente();
 
     }
 
     // Método para visualização dos clientes cadastrados
     @SuppressWarnings("static-access")
     public static void visualizarClientes() {
-        if (clientes.isEmpty()) {
+        ClienteDAO clDao = new ClienteDAO();
+        List<Cliente> listaDeClientes = clDao.list();
+
+        if (listaDeClientes.isEmpty()) {
             System.out.println("Nenhum Cliente Cadastrado!!!");
-            MenuCliente.menuCliente();
+            Menu.menuCliente();
         } else {
-            for (Cliente c : clientes) {
+            for (Cliente c : listaDeClientes) {
                 System.out.println(">>>Cliente<<<");
                 System.out.println("Nome: " + c.getNome());
                 System.out.println("RG: " + c.getRg());
                 System.out.println("Contato: " + c.getContato());
             }
-            MenuCliente.menuCliente();
+            Menu.menuCliente();
         }
 
     }
@@ -126,13 +130,17 @@ public class Cliente {
     // Método para atualizar os dados do cliente 
     @SuppressWarnings("static-access")
     public static void atualizarDadosCliente() {
+        ClienteDAO clDao = new ClienteDAO();
+
+        List<Cliente> listaDeClientes = clDao.list();
+
         boolean valida = false;
         int rgAtualiza = 0;
         int atualiza = 0;
 
-        if (clientes.isEmpty()) {
+        if (listaDeClientes.isEmpty()) {
             System.out.println("Cliente não cadastrado!!!");
-            MenuCliente.menuCliente();
+            Menu.menuCliente();
         } else {
             do {
                 try {
@@ -146,8 +154,8 @@ public class Cliente {
 
             } while (valida == false);
 
-            for (int i = 0; i < clientes.size(); i++) {
-                if (rgAtualiza == clientes.get(i).getRg()) {
+            for (int i = 0; i < listaDeClientes.size(); i++) {
+                if (rgAtualiza == listaDeClientes.get(i).getRg()) {
                     do {
                         try {
                             atualiza = Integer.parseInt(
@@ -163,7 +171,7 @@ public class Cliente {
                     System.out.println("Cliente encontrado!");
 
                     if (atualiza == 1) {
-                        clientes.get(i).setNome(digita("Digite o nome: "));
+                        listaDeClientes.get(i).setNome(digita("Digite o nome: "));
                     }
                     if (atualiza == 2) {
                         clientes.get(i).setContato(digita("Digite o contato: "));
@@ -171,10 +179,11 @@ public class Cliente {
 
                 } else {
                     System.out.println("RG não cadastrado!");
-                    MenuCliente.menuCliente();
+                    Menu.menuCliente();
                 }
             }
-            MenuCliente.menuCliente();
+            //clDao.update();
+            Menu.menuCliente();
         }
 
     }
@@ -186,7 +195,7 @@ public class Cliente {
         boolean valida = false;
         if (clientes.isEmpty()) {
             System.out.println("Cliente não cadastrado!!!");
-            MenuCliente.menuCliente();
+            Menu.menuCliente();
         } else {
             do {
                 try {
@@ -203,14 +212,14 @@ public class Cliente {
                 if (rgExcluido == clientes.get(i).getRg()) {
                     clientes.remove(i);
                     System.out.println("Cliente Excluído!!!");
-                    MenuCliente.menuCliente();
+                    Menu.menuCliente();
                 } else {
                     System.out.println("RG não cadastrado!!!");
-                    MenuCliente.menuCliente();
+                    Menu.menuCliente();
                 }
 
             }
-            MenuCliente.menuCliente();
+            Menu.menuCliente();
         }
 
     }

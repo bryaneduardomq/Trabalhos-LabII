@@ -1,4 +1,4 @@
-package venda;
+package model;
 
 //import br.com.bryan.senac.classes.Cliente;
 //import br.com.bryan.senac.menus.MenuPrincipal;

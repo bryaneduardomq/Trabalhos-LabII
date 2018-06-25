@@ -1,9 +1,9 @@
-package venda;
+package model;
 
-import entidades.Aviao;
-import entidades.Cliente;
-import entidades.Voo;
-import menus.MenuPrincipal;
+import model.Aviao;
+import model.Cliente;
+import model.Voo;
+import view.Menu;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.Date;
@@ -36,7 +36,7 @@ public class Venda {
     @SuppressWarnings("static-access")
     public static void realizarVenda() {
         Venda ven = new Venda();
-        MenuPrincipal mp = new MenuPrincipal();
+        Menu mp = new Menu();
         int rgCompra = 0;
         String buscarOrigem = null;
         String buscarDestino = null;

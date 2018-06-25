@@ -1,11 +1,10 @@
-package entidades;
+package model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import menus.MenuAviao;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import view.Menu;
 
 //Classe Avião
 public class Aviao {
@@ -48,7 +47,6 @@ public class Aviao {
     @SuppressWarnings("static-access")
     public static void cadastrarAviao() {
         Aviao a = new Aviao();
-        MenuAviao m = new MenuAviao();
         boolean valida = false;
 
         do {
@@ -87,17 +85,16 @@ public class Aviao {
 
         avioes.add(a);
 
-        m.menuAviao();
+        Menu.menuAviao();
 
     }
 
     //Método para visualizar frota de aviões
     @SuppressWarnings("static-access")
     public static void visualizarFrota() {
-        MenuAviao m = new MenuAviao();
         if (avioes.isEmpty()) {
             System.out.println("Nenhum Avião Cadastrado!!!");
-            m.menuAviao();
+            Menu.menuAviao();
         } else {
             for (Aviao a : avioes) {
                 System.out.println(">>>AVIÃO<<<");
@@ -105,7 +102,7 @@ public class Aviao {
                 System.out.println("Código: " + a.getCodigo());
                 System.out.println("Quantidade de Assentos: " + a.getQtAssentos());
             }
-            m.menuAviao();
+            Menu.menuAviao();
         }
 
     }
