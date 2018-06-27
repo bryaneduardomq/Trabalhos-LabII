@@ -1,17 +1,18 @@
 package view;
 
+import java.sql.SQLException;
 import model.Aviao;
-import model.Cliente;
 import model.Venda;
 import model.Voo;
 import java.util.Scanner;
+import model.Cliente;
 
 //Classe do Menu Principal do Programa
 public class Menu {
 
     //Método do menu principal
-    @SuppressWarnings({"static-access"})
-    public static void menuPrincipal() {
+    @SuppressWarnings("static-access")
+    public static void menuPrincipal() throws SQLException {
         Scanner e = new Scanner(System.in);
         String menu = "\n===========================================";
         menu += "\n>>>Controle de Vendas de Passagens Aéreas<<<";
@@ -53,8 +54,7 @@ public class Menu {
         }
     }
 
-    @SuppressWarnings("static-access")
-    public static void menuCliente() {
+    public static void menuCliente() throws SQLException {
         Scanner e = new Scanner(System.in);
         String mCliente = "\n=========================";
         mCliente += "\nMenu Cliente";
@@ -91,8 +91,7 @@ public class Menu {
         }
     }
 
-    @SuppressWarnings("static-access")
-    public static void menuAviao() {
+    public static void menuAviao() throws SQLException {
         Scanner e = new Scanner(System.in);
         Aviao aviao = new Aviao();
         String mAviao = "\n=========================";
@@ -123,7 +122,7 @@ public class Menu {
     }
 
     @SuppressWarnings("static-access")
-    public static void menuVoo() {
+    public static void menuVoo() throws SQLException {
         Scanner e = new Scanner(System.in);
         Voo voo = new Voo();
         String mVoo = "\n=========================";

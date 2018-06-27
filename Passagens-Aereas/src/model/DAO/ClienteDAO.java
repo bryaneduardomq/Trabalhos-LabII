@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.Cliente;
 import model.bd.Conexao;
 
@@ -14,97 +13,86 @@ public class ClienteDAO {
 
     private Connection con = Conexao.getConnection();
 
-    public void insert(Cliente cliente) {
+    public void insert(Cliente cliente) throws SQLException {
 
         String sql = "INSERT INTO CLIENTE (rg, nome, contato) values (?,?,?)";
-        try {
-            PreparedStatement prepara = con.prepareStatement(sql);
 
-            int rg = cliente.getRg();
-            String nome = cliente.getNome();
-            String contato = cliente.getContato();
+        PreparedStatement prepara = con.prepareStatement(sql);
 
-            prepara.setInt(1, rg);
-            prepara.setString(2, nome);
-            prepara.setString(3, contato);
+        int rg = cliente.getRg();
+        String nome = cliente.getNome();
+        String contato = cliente.getContato();
 
-            prepara.execute();
-            prepara.close();
+        prepara.setInt(1, rg);
+        prepara.setString(2, nome);
+        prepara.setString(3, contato);
 
-            System.out.println("Registro Cliente -salvo- com sucesso");
+        prepara.execute();
+        prepara.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Registro Cliente -salvo- com sucesso");
 
     }
 
-    public List<Cliente> list() { //procurar todos nao tem parametro
+    public List<Cliente> list() throws SQLException { //procurar todos nao tem parametro
 
         List<Cliente> listaDeClientes = new ArrayList<Cliente>();
 
         String sql = "SELECT * FROM cliente";
 
-        try {
-            PreparedStatement prepara = con.prepareStatement(sql);
+        PreparedStatement prepara = con.prepareStatement(sql);
 
-            ResultSet resultado = prepara.executeQuery(); //retorna resultado da consulta da query -> tipo ResultSet
+        ResultSet resultado = prepara.executeQuery(); //retorna resultado da consulta da query -> tipo ResultSet
 
-            while (resultado.next()) { //buscando valor das colunas, registro por registro
+        while (resultado.next()) { //buscando valor das colunas, registro por registro
 
-                Cliente c = new Cliente();
+            Cliente c = new Cliente();
 
-                int rg = resultado.getInt("rg");
-                String nome = resultado.getString("nome");
-                String contato = resultado.getString("contato");
+            int rg = resultado.getInt("rg");
+            String nome = resultado.getString("nome");
+            String contato = resultado.getString("contato");
 
-                c.setRg(rg);
-                c.setNome(nome);
-                c.setContato(contato);
+            c.setRg(rg);
+            c.setNome(nome);
+            c.setContato(contato);
 
-                listaDeClientes.add(c);
-            }
-            prepara.close();
-
-            System.out.println("Listando Todos os Clientes");
-
-        } catch (SQLException e) {
-            //se comando sql nao estiver correto ira imprimir o erro gerado
-            e.printStackTrace();
+            listaDeClientes.add(c);
         }
+        prepara.close();
 
         return listaDeClientes;
     }
 
-    public void update(Cliente cliente) {
+    public void update(Cliente cliente) throws SQLException {
 
-        String sql = "UPDATE cliente SET nome=?, contato=? WHERE rg=?";
+        String sql = "UPDATE cliente SET nome=?, contato=? WHERE rg = '" + cliente.getRg() + "'";
 
-        try {
+        PreparedStatement prepara = con.prepareStatement(sql);
 
-            PreparedStatement prepara = con.prepareStatement(sql);
+        String nome = cliente.getNome();
+        String contato = cliente.getContato();
 
-            String nome = cliente.getNome();
-            String contato = cliente.getContato();
-            int rg = cliente.getRg();
+        prepara.setString(1, nome);
+        prepara.setString(2, contato);
 
-            prepara.setString(1, nome);
-            prepara.setString(2, contato);
-            prepara.setInt(3, rg);
+        prepara.execute();
+        prepara.close();
 
-            prepara.execute();
-            prepara.close();
-
-            System.out.println("Registro Cliente -alterado- com sucesso");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
+        System.out.println("Registro Cliente -alterado- com sucesso");
 
     }
 
-    public void delete() {
+    public void delete(Cliente cliente) throws SQLException {
+
+        String sql = "DELETE FROM cliente WHERE rg = '" + cliente.getRg() + "'";
+
+        PreparedStatement prepara = con.prepareStatement(sql);
+
+        prepara.executeUpdate();
+
+        prepara.close();
+
+        System.out.println("Registro Cliente -deletado- com sucesso");
 
     }
 

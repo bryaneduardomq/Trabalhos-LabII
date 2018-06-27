@@ -1,9 +1,12 @@
 package model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import model.DAO.AviaoDAO;
 import view.Menu;
 
 //Classe Voo
@@ -59,8 +62,12 @@ public class Voo {
 
     //Método de cadastro de voo
     @SuppressWarnings("static-access")
-    public static void cadastrarVoo() {
+    public static void cadastrarVoo() throws SQLException {
         Voo v = new Voo();
+        AviaoDAO avDao = new AviaoDAO();
+
+        List<Aviao> frotaDeAvioes = avDao.listAviao();
+
         boolean valida = false;
         int cod = 0;
 
@@ -103,10 +110,10 @@ public class Voo {
 
         } while (valida == false);
 
-        for (int i = 0; i < Aviao.avioes.size(); i++) {
-            if (cod == Aviao.avioes.get(i).getCodigo()) {
-                v.aviao = Aviao.avioes.get(i);
-                v.quantidadeAssentos = Aviao.avioes.get(i).getQtAssentos();
+        for (int i = 0; i < frotaDeAvioes.size(); i++) {
+            if (cod == frotaDeAvioes.get(i).getCodigo()) {
+                v.aviao = frotaDeAvioes.get(i);
+                v.quantidadeAssentos = frotaDeAvioes.get(i).getQtAssentos();
                 voos.add(v);
             } else {
                 System.out.println("Avião não cadastrado");
@@ -118,7 +125,7 @@ public class Voo {
 
     //Método para visualizar dados do voo
     @SuppressWarnings("static-access")
-    public static void visualizarVoo() {
+    public static void visualizarVoo() throws SQLException {
         if (voos.isEmpty()) {
             System.out.println("Nenhum Voo Cadastrado!!!");
             Menu.menuVoo();

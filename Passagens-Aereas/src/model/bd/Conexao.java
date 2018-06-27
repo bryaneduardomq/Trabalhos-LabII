@@ -3,7 +3,6 @@ package model.bd;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import view.Menu;
 
 public class Conexao {
 
@@ -12,12 +11,12 @@ public class Conexao {
 
         try {
             con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/voos", "postgres", "1234");
-            System.out.println("Conectado com Sucesso");
-            Menu.menuPrincipal();
+            //System.out.println("Conectado com Sucesso");
         } catch (SQLException e) {
-            System.out.println("Falha na conexão!");
+            System.out.println("Falha na conexão");
         }
 
         return con;
     }
+
 }

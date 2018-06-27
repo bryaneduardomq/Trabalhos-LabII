@@ -1,16 +1,17 @@
 package model;
 
-import model.Aviao;
-import model.Cliente;
-import model.Voo;
 import view.Menu;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import model.DAO.AviaoDAO;
+import model.DAO.ClienteDAO;
 
 //Classe de Venda
 public class Venda {
@@ -34,17 +35,22 @@ public class Venda {
 
     //Método para realizar a venda da passagem
     @SuppressWarnings("static-access")
-    public static void realizarVenda() {
+    public static void realizarVenda() throws SQLException {
         Venda ven = new Venda();
-        Menu mp = new Menu();
+        ClienteDAO clDao = new ClienteDAO();
+        AviaoDAO avDao = new AviaoDAO();
+
+        List<Cliente> listaDeClientes = clDao.list();
+        List<Aviao> frotaDeAvioes = avDao.listAviao();
+
         int rgCompra = 0;
         String buscarOrigem = null;
         String buscarDestino = null;
         boolean valida = false;
 
-        if (Cliente.clientes.isEmpty() || Aviao.avioes.isEmpty() || Voo.voos.isEmpty()) {
+        if (listaDeClientes.isEmpty() || frotaDeAvioes.isEmpty() || Voo.voos.isEmpty()) {
             System.out.println("Venda não pode ser realizada!");
-            mp.menuPrincipal();
+            Menu.menuPrincipal();
         } else {
             System.out.println(">>>Venda de Passagens Aéreas<<<");
 
@@ -82,7 +88,7 @@ public class Venda {
                     Voo.voos.get(i).setQuantidadeAssentos(Voo.voos.get(i).getQuantidadeAssentos() - 1);//Diminui a quantidade de assentos disponíveis no voo
                     if (Voo.voos.get(i).getQuantidadeAssentos() == 0) {
                         System.out.println("Voo Lotado!");
-                        mp.menuPrincipal();
+                        Menu.menuPrincipal();
                     }
 
                     ven.voo = Voo.voos.get(i);
@@ -98,13 +104,13 @@ public class Venda {
 
                     } while (valida == false);
 
-                    for (i = 0; i < Cliente.clientes.size(); i++) {
-                        if (rgCompra == Cliente.clientes.get(i).getRg()) {
-                            ven.cliente = Cliente.clientes.get(i);
+                    for (i = 0; i < listaDeClientes.size(); i++) {
+                        if (rgCompra == listaDeClientes.get(i).getRg()) {
+                            ven.cliente = listaDeClientes.get(i);
                             System.out.println("Cliente registrado!");
                         } else {
                             System.out.println("Cliente não registrado!");
-                            mp.menuPrincipal();
+                            Menu.menuPrincipal();
                         }
                     }
 
@@ -131,11 +137,11 @@ public class Venda {
 
                 } else {
                     System.out.println("Trecho não disponível!");
-                    mp.menuPrincipal();
+                    Menu.menuPrincipal();
                 }
             }
         }
-        mp.menuPrincipal();
+        Menu.menuPrincipal();
     }
 
     private static String digita(String mens) {

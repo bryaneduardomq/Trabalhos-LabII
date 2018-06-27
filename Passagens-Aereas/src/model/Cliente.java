@@ -1,20 +1,19 @@
 package model;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import model.DAO.ClienteDAO;
 import java.util.List;
 import view.Menu;
+//import view.MenuCliente;
 
 public class Cliente {
 
     private String nome;
     private int rg;
     private String contato;
-    public static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
     // Construtor Padrão
     public Cliente() {
@@ -47,9 +46,9 @@ public class Cliente {
     }
 
     // Método para cadastrar o cliente
-    @SuppressWarnings("static-access")
-    public static void cadastrarCliente() {
+    public static void cadastrarCliente() throws SQLException {
         Cliente c = new Cliente();
+        ClienteDAO clDAO = new ClienteDAO();
         boolean valida = false;
 
         do {
@@ -59,7 +58,7 @@ public class Cliente {
                 while (verificacao == true) {
                     verificacao = verificaRepetido(c.rg = Integer.parseInt(digita("Digite o rg do cliente: ")));
                     if (verificacao == true) {
-                        System.out.println("ERRO");
+                        System.out.println("ERRO! Rg Repetido");
                     } else {
                         valida = true;
                     }
@@ -98,17 +97,15 @@ public class Cliente {
 
         } while (valida == false);
 
-        ClienteDAO clDAO = new ClienteDAO();
         clDAO.insert(c);
 
-        //clientes.add(c);
         Menu.menuCliente();
 
     }
 
     // Método para visualização dos clientes cadastrados
     @SuppressWarnings("static-access")
-    public static void visualizarClientes() {
+    public static void visualizarClientes() throws SQLException {
         ClienteDAO clDao = new ClienteDAO();
         List<Cliente> listaDeClientes = clDao.list();
 
@@ -129,10 +126,12 @@ public class Cliente {
 
     // Método para atualizar os dados do cliente 
     @SuppressWarnings("static-access")
-    public static void atualizarDadosCliente() {
+    public static void atualizarDadosCliente() throws SQLException {
         ClienteDAO clDao = new ClienteDAO();
 
         List<Cliente> listaDeClientes = clDao.list();
+
+        Cliente c = new Cliente();
 
         boolean valida = false;
         int rgAtualiza = 0;
@@ -171,10 +170,13 @@ public class Cliente {
                     System.out.println("Cliente encontrado!");
 
                     if (atualiza == 1) {
+
                         listaDeClientes.get(i).setNome(digita("Digite o nome: "));
+                        c = listaDeClientes.get(i);
                     }
                     if (atualiza == 2) {
-                        clientes.get(i).setContato(digita("Digite o contato: "));
+                        listaDeClientes.get(i).setContato(digita("Digite o contato: "));
+                        c = listaDeClientes.get(i);
                     }
 
                 } else {
@@ -182,7 +184,8 @@ public class Cliente {
                     Menu.menuCliente();
                 }
             }
-            //clDao.update();
+
+            clDao.update(c);
             Menu.menuCliente();
         }
 
@@ -190,10 +193,15 @@ public class Cliente {
 
     //Método para excluir o cliente
     @SuppressWarnings("static-access")
-    public static void excluirCliente() {
+    public static void excluirCliente() throws SQLException {
+        ClienteDAO clDao = new ClienteDAO();
+
+        List<Cliente> listaDeClientes = clDao.list();
+
+        Cliente c = new Cliente();
         int rgExcluido = 0;
         boolean valida = false;
-        if (clientes.isEmpty()) {
+        if (listaDeClientes.isEmpty()) {
             System.out.println("Cliente não cadastrado!!!");
             Menu.menuCliente();
         } else {
@@ -208,27 +216,30 @@ public class Cliente {
 
             } while (valida == false);
 
-            for (int i = 0; i < clientes.size(); i++) {
-                if (rgExcluido == clientes.get(i).getRg()) {
-                    clientes.remove(i);
-                    System.out.println("Cliente Excluído!!!");
-                    Menu.menuCliente();
+            for (int i = 0; i < listaDeClientes.size(); i++) {
+                if (rgExcluido == listaDeClientes.get(i).getRg()) {
+
+                    c = listaDeClientes.get(i);
                 } else {
                     System.out.println("RG não cadastrado!!!");
                     Menu.menuCliente();
                 }
 
             }
+            clDao.delete(c);
             Menu.menuCliente();
         }
 
     }
 
-    private static boolean verificaRepetido(int rg) {
+    private static boolean verificaRepetido(int rg) throws SQLException {
+        ClienteDAO clDao = new ClienteDAO();
+        List<Cliente> listaDeClientes = clDao.list();
+
         boolean rgDuplicado = false;
 
-        for (int i = 0; i < clientes.size(); i++) {
-            if (clientes.get(i).getRg() == rg) {
+        for (int i = 0; i < listaDeClientes.size(); i++) {
+            if (listaDeClientes.get(i).getRg() == rg) {
                 rgDuplicado = true;
             }
         }
