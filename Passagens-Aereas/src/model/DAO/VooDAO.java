@@ -19,17 +19,19 @@ public class VooDAO {
 
         PreparedStatement prepara = con.prepareStatement(sql);
 
-        //int codvoo = voo.
+        //int codvoo = voo.getCodigo();
         String or = voo.getOrigem();
         String des = voo.getDestino();
         String hor = voo.getHorario();
         int qt = voo.getQuantidadeAssentos();
+        int codaviao = voo.getAviao().getCodigo();
 
-        //prepara.setInt(1, codvoo);
+        //prepara.setInt(1, );
         prepara.setString(2, or);
         prepara.setString(3, des);
         prepara.setString(4, hor);
         prepara.setInt(5, qt);
+        prepara.setInt(6, codaviao);
 
         prepara.execute();
         prepara.close();
