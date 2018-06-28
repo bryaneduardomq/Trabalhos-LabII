@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import model.DAO.AviaoDAO;
+import model.DAO.VooDAO;
 import view.Menu;
 
 //Classe Voo
@@ -64,6 +65,7 @@ public class Voo {
     @SuppressWarnings("static-access")
     public static void cadastrarVoo() throws SQLException {
         Voo v = new Voo();
+        VooDAO vDao = new VooDAO();
         AviaoDAO avDao = new AviaoDAO();
 
         List<Aviao> frotaDeAvioes = avDao.listAviao();
@@ -114,23 +116,30 @@ public class Voo {
             if (cod == frotaDeAvioes.get(i).getCodigo()) {
                 v.aviao = frotaDeAvioes.get(i);
                 v.quantidadeAssentos = frotaDeAvioes.get(i).getQtAssentos();
-                voos.add(v);
+
             } else {
                 System.out.println("Avião não cadastrado");
                 Menu.menuVoo();
             }
         }
+
+        vDao.insertVoo(v);
+
         Menu.menuVoo();
     }
 
     //Método para visualizar dados do voo
     @SuppressWarnings("static-access")
     public static void visualizarVoo() throws SQLException {
-        if (voos.isEmpty()) {
+        VooDAO vDao = new VooDAO();
+
+        List<Voo> listaDeVoos = vDao.listaDeVoos();
+
+        if (listaDeVoos.isEmpty()) {
             System.out.println("Nenhum Voo Cadastrado!!!");
             Menu.menuVoo();
         } else {
-            for (Voo v : voos) {
+            for (Voo v : listaDeVoos) {
                 System.out.println(">>>VOO<<<");
                 System.out.println("Origem: " + v.getOrigem());
                 System.out.println("Destino: " + v.getDestino());

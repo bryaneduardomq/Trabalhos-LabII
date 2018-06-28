@@ -65,4 +65,37 @@ public class AviaoDAO {
 
     }
 
+    public void updateAviao(Aviao aviao) throws SQLException {
+
+        String sql = "UPDATE aviao SET nomeAviao=?, qtassentos=? WHERE codAviao='" + aviao.getCodigo() + "'";
+
+        PreparedStatement prepara = con.prepareStatement(sql);
+
+        String nome = aviao.getNomeAviao();
+        int qt = aviao.getQtAssentos();
+
+        prepara.setString(1, nome);
+        prepara.setInt(2, qt);
+
+        prepara.execute();
+        prepara.close();
+
+        System.out.println("Registro Aviao -alterado- com sucesso");
+
+    }
+
+    public void deleteAviao(Aviao aviao) throws SQLException {
+
+        String sql = "DELETE FROM aviao WHERE '" + aviao.getCodigo() + "'";
+
+        PreparedStatement prepara = con.prepareStatement(sql);
+
+        prepara.executeUpdate();
+
+        prepara.close();
+
+        System.out.println("Registro Aviao -deletado- com sucesso");
+
+    }
+
 }

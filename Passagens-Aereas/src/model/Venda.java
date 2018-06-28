@@ -36,7 +36,7 @@ public class Venda {
     //Método para realizar a venda da passagem
     @SuppressWarnings("static-access")
     public static void realizarVenda() throws SQLException {
-        Venda ven = new Venda();
+        Venda venda = new Venda();
         ClienteDAO clDao = new ClienteDAO();
         AviaoDAO avDao = new AviaoDAO();
 
@@ -91,7 +91,7 @@ public class Venda {
                         Menu.menuPrincipal();
                     }
 
-                    ven.voo = Voo.voos.get(i);
+                    venda.voo = Voo.voos.get(i);
 
                     do {
                         try {
@@ -106,7 +106,7 @@ public class Venda {
 
                     for (i = 0; i < listaDeClientes.size(); i++) {
                         if (rgCompra == listaDeClientes.get(i).getRg()) {
-                            ven.cliente = listaDeClientes.get(i);
+                            venda.cliente = listaDeClientes.get(i);
                             System.out.println("Cliente registrado!");
                         } else {
                             System.out.println("Cliente não registrado!");
@@ -118,13 +118,13 @@ public class Venda {
 
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date date = new Date(System.currentTimeMillis());
-                    ven.horarioCompra = dateFormat.format(date);
+                    venda.horarioCompra = dateFormat.format(date);
 
-                    vendas.add(ven);
+                    vendas.add(venda);
 
                     //Irá mostrar a compra realizada pelo cliente
                     for (i = 0; i < Venda.vendas.size(); i++) {
-                        if (rgCompra == ven.cliente.getRg()) {
+                        if (rgCompra == venda.cliente.getRg()) {
                             System.out.println(">>>Extrato da venda<<<<");
                             System.out.println("Cliente: " + vendas.get(i).getCliente().getNome());
                             System.out.println("Voo" + "\nOrigem: " + vendas.get(i).getVoo().getOrigem()
