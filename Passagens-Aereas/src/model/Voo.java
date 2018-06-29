@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -13,15 +12,20 @@ import view.Menu;
 //Classe Voo
 public class Voo {
 
+    private int codigoVoo;
     private String origem;
     private String destino;
     private String horario;
     private Aviao aviao;
     private int quantidadeAssentos; //Variável para controlar a quantidade de assentos no voo
-    public static ArrayList<Voo> voos = new ArrayList<Voo>();
 
     //Construtor
     public Voo() {
+
+    }
+
+    public int getCodigoVoo() {
+        return codigoVoo;
 
     }
 
@@ -59,6 +63,10 @@ public class Voo {
 
     public Aviao getAviao() {
         return aviao;
+    }
+
+    public void setAviao(Aviao aviao) {
+        this.aviao = aviao;
     }
 
     //Método de cadastro de voo

@@ -15,23 +15,21 @@ public class VooDAO {
 
     public void insertVoo(Voo voo) throws SQLException {
 
-        String sql = "INSERT INTO Voo (codvoo,origem,destino,horario,qtassentosvoo,codaviao) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO Voo (origem,destino,horario,qtassentosvoo,codaviao) VALUES (?,?,?,?,?)";
 
         PreparedStatement prepara = con.prepareStatement(sql);
 
-        //int codvoo = voo.getCodigo();
         String or = voo.getOrigem();
         String des = voo.getDestino();
         String hor = voo.getHorario();
         int qt = voo.getQuantidadeAssentos();
         int codaviao = voo.getAviao().getCodigo();
 
-        //prepara.setInt(1, );
-        prepara.setString(2, or);
-        prepara.setString(3, des);
-        prepara.setString(4, hor);
-        prepara.setInt(5, qt);
-        prepara.setInt(6, codaviao);
+        prepara.setString(1, or);
+        prepara.setString(2, des);
+        prepara.setString(3, hor);
+        prepara.setInt(4, qt);
+        prepara.setInt(5, codaviao);
 
         prepara.execute();
         prepara.close();
@@ -50,6 +48,18 @@ public class VooDAO {
         while (rs.next()) {
 
             Voo v = new Voo();
+
+            String or = rs.getString("origem");
+            String ds = rs.getString("destino");
+            String hr = rs.getString("horario");
+            int qt = rs.getInt("qtassentos");
+            int codaviao = rs.getInt("codaviao");
+
+            v.setOrigem(or);
+            v.setDestino(ds);
+            v.setHorario(hr);
+            v.setQuantidadeAssentos(qt);
+            //v.setAviao(codaviao);
 
             listaDeVoos.add(v);
         }
