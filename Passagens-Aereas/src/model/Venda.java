@@ -141,17 +141,17 @@ public class Venda {
                         }
                     }
 
-                    System.out.println("\nCompra Realizada com Sucesso!!!");
-
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date date = new Date(System.currentTimeMillis());
                     venda.setHorarioCompra(dateFormat.format(date));
 
                     vdDao.insertVenda(venda);
 
+                    System.out.println("\nCompra Realizada com Sucesso!!!");
+
                     //Irá mostrar a compra realizada pelo cliente
                     for (i = 0; i < extratoVenda.size(); i++) {
-                        if (rgCompra == venda.cliente.getRg()) {
+                        if (rgCompra == extratoVenda.get(i).getCliente().getRg()) {
                             System.out.println(">>>Extrato da venda<<<<");
                             System.out.println("Cliente: " + extratoVenda.get(i).getCliente().getNome());
                             System.out.println("Voo" + "\nOrigem: " + extratoVenda.get(i).getVoo().getOrigem()

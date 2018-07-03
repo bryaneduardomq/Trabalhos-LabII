@@ -62,6 +62,9 @@ public class Aviao {
             
         } while (valida == false);
         
+        valida = false;
+        
+        //tirar do-while
         do {
             a.nomeAviao = digita("Digite o nome do avião: ");
             Pattern padrao = Pattern.compile("[0-9]");

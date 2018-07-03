@@ -152,9 +152,9 @@ public class Voo {
                 System.out.println("Origem: " + v.getOrigem());
                 System.out.println("Destino: " + v.getDestino());
                 System.out.println("Horário: " + v.getHorario());
-                System.out.println("\nAvião: " + v.getAviao().getNomeAviao() + "\nCódigo Avião "
+                System.out.println("\nAvião: " + v.getAviao().getNomeAviao() + "\nCódigo do Avião: "
                         + v.getAviao().getCodigo() + "\nQuantidade de Assentos do Avião: "
-                        + v.getAviao().getQtAssentos());//Arrumar
+                        + v.getAviao().getQtAssentos());
             }
         }
         Menu.menuVoo();

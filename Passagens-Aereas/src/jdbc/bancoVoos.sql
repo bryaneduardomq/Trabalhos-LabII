@@ -11,24 +11,25 @@ qtAssentos int
 );
 
 CREATE TABLE Voo(
-codVoo integer PRIMARY KEY,
+codVoo serial PRIMARY KEY,
 origem VARCHAR(100),
 destino VARCHAR(100),    
 horario VARCHAR(100),
 qtAssentosVoo int,    
-codAviao int references Aviao(codigo)
+codAviao int references Aviao(codAviao)
 );
 
 CREATE TABLE Venda(
-codVenda integer PRIMARY KEY,
-horarioCompra VARCHAR(100),
+codVenda serial PRIMARY KEY,
+voo int references Voo(codVoo),
 cliente int references Cliente(rg),
-voo int references Voo(codVoo)
+horarioCompra VARCHAR(100)
 );
 
+select * from voo
 
+select * from venda
 
+select * from cliente
 
-
-
-
+select * from aviao

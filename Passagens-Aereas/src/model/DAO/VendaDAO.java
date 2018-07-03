@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Cliente;
 import model.Venda;
+import model.Voo;
 import model.bd.Conexao;
 
 public class VendaDAO {
@@ -15,17 +17,17 @@ public class VendaDAO {
 
     public void insertVenda(Venda venda) throws SQLException {
 
-        String sql = "INSERT INTO venda (horariocompra, cliente, voo) VALUES (?,?,?)";
+        String sql = "INSERT INTO venda (voo, cliente, horariocompra) VALUES (?,?,?)";
 
         PreparedStatement prepara = con.prepareStatement(sql);
 
-        String hrcompra = venda.getHorarioCompra();
-        int cliente = venda.getCliente().getRg();
         int voo = venda.getVoo().getCodigoVoo();
+        int cliente = venda.getCliente().getRg();
+        String hrcompra = venda.getHorarioCompra();
 
-        prepara.setString(1, hrcompra);
+        prepara.setInt(1, voo);
         prepara.setInt(2, cliente);
-        prepara.setInt(3, voo);
+        prepara.setString(3, hrcompra);
 
         prepara.execute();
         prepara.close();
@@ -46,13 +48,37 @@ public class VendaDAO {
 
             Venda v = new Venda();
 
-            String hrcompra = rs.getString("horariocompra");
-            int cliente = rs.getInt("cliente");
-            int voo = rs.getInt("voo");
+            String sqlC = "SELECT * FROM cliente WHERE rg = " + rs.getInt("cliente");
 
+            PreparedStatement sqlCliente = con.prepareStatement(sqlC);
+
+            ResultSet rsCliente = sqlCliente.executeQuery();
+
+            Cliente c = new Cliente();
+
+            rsCliente.next();
+
+            c.setNome("nome");
+
+            String sqlV = "SELECT * FROM voo WHERE codvoo = " + rs.getInt("voo");
+
+            PreparedStatement sqlVoo = con.prepareStatement(sqlV);
+
+            ResultSet rsVoo = sqlVoo.executeQuery();
+
+            Voo voo = new Voo();
+
+            rsVoo.next();
+
+            voo.setOrigem("origem");
+            voo.setDestino("destino");
+            voo.setHorario("horario");
+
+            String hrcompra = rs.getString("horariocompra");
+
+            v.setVoo(voo);
+            v.setCliente(c);
             v.setHorarioCompra(hrcompra);
-            //v.setCliente(cliente);
-            //v.setVoo(voo);
 
             listaVenda.add(v);
 

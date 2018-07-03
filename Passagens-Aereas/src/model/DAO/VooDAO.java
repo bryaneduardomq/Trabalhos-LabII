@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Aviao;
 import model.Voo;
 import model.bd.Conexao;
 
@@ -49,17 +50,30 @@ public class VooDAO {
 
             Voo v = new Voo();
 
+            String sqlAv = "SELECT * FROM aviao where codaviao = " + rs.getInt("codaviao");
+
+            PreparedStatement prepAv = con.prepareStatement(sqlAv);
+
+            ResultSet rsAviao = prepAv.executeQuery();
+
+            Aviao a = new Aviao();
+
+            rsAviao.next();
+
+            a.setCodigo(rsAviao.getInt("codaviao"));
+            a.setNomeAviao(rsAviao.getString("nomeaviao"));
+            a.setQtAssentos(rsAviao.getInt("qtassentos"));
+
             String or = rs.getString("origem");
             String ds = rs.getString("destino");
             String hr = rs.getString("horario");
-            int qt = rs.getInt("qtassentos");
-            int codaviao = rs.getInt("codaviao");
+            int qt = rs.getInt("qtassentosvoo");
 
             v.setOrigem(or);
             v.setDestino(ds);
             v.setHorario(hr);
             v.setQuantidadeAssentos(qt);
-            //v.setAviao(codaviao);
+            v.setAviao(a);
 
             listaDeVoos.add(v);
         }
