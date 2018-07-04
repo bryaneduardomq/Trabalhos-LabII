@@ -12,7 +12,7 @@ import model.bd.Conexao;
 
 public class VooDAO {
 
-    private Connection con = Conexao.getConnection();
+    private final Connection con = Conexao.getConnection();
 
     public void insertVoo(Voo voo) throws SQLException {
 
@@ -38,7 +38,7 @@ public class VooDAO {
     }
 
     public List<Voo> listaDeVoos() throws SQLException {
-        List<Voo> listaDeVoos = new ArrayList<Voo>();
+        List<Voo> listaDeVoos = new ArrayList<>();
 
         String sql = "SELECT * FROM voo";
 
@@ -64,11 +64,13 @@ public class VooDAO {
             a.setNomeAviao(rsAviao.getString("nomeaviao"));
             a.setQtAssentos(rsAviao.getInt("qtassentos"));
 
+            int cod = rs.getInt("idvoo");
             String or = rs.getString("origem");
             String ds = rs.getString("destino");
             String hr = rs.getString("horario");
             int qt = rs.getInt("qtassentosvoo");
 
+            v.setCodVoo(cod);
             v.setOrigem(or);
             v.setDestino(ds);
             v.setHorario(hr);

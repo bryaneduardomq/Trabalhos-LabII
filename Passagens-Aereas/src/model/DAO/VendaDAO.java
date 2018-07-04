@@ -17,11 +17,11 @@ public class VendaDAO {
 
     public void insertVenda(Venda venda) throws SQLException {
 
-        String sql = "INSERT INTO venda (voo, cliente, horariocompra) VALUES (?,?,?)";
+        String sql = "INSERT INTO venda (idvoo, rg, horariocompra) VALUES (?,?,?)";
 
         PreparedStatement prepara = con.prepareStatement(sql);
 
-        int voo = venda.getVoo().getCodigoVoo();
+        int voo = venda.getVoo().getCodVoo();
         int cliente = venda.getCliente().getRg();
         String hrcompra = venda.getHorarioCompra();
 
@@ -48,7 +48,7 @@ public class VendaDAO {
 
             Venda v = new Venda();
 
-            String sqlC = "SELECT * FROM cliente WHERE rg = " + rs.getInt("cliente");
+            String sqlC = "SELECT * FROM cliente WHERE rg = " + rs.getInt("rg");
 
             PreparedStatement sqlCliente = con.prepareStatement(sqlC);
 
@@ -60,7 +60,7 @@ public class VendaDAO {
 
             c.setNome("nome");
 
-            String sqlV = "SELECT * FROM voo WHERE codvoo = " + rs.getInt("voo");
+            String sqlV = "SELECT * FROM voo WHERE codvoo = " + rs.getInt("idvoo");
 
             PreparedStatement sqlVoo = con.prepareStatement(sqlV);
 

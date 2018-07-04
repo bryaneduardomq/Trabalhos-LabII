@@ -12,7 +12,7 @@ import view.Menu;
 //Classe Voo
 public class Voo {
 
-    private int codigoVoo;
+    private Integer codVoo;
     private String origem;
     private String destino;
     private String horario;
@@ -24,9 +24,12 @@ public class Voo {
 
     }
 
-    public int getCodigoVoo() {
-        return codigoVoo;
+    public Integer getCodVoo() {
+        return codVoo;
+    }
 
+    public void setCodVoo(Integer codVoo) {
+        this.codVoo = codVoo;
     }
 
     public String getOrigem() {
@@ -149,6 +152,7 @@ public class Voo {
         } else {
             for (Voo v : listaDeVoos) {
                 System.out.println(">>>VOO<<<");
+                System.out.println("Código: " + v.getCodVoo());
                 System.out.println("Origem: " + v.getOrigem());
                 System.out.println("Destino: " + v.getDestino());
                 System.out.println("Horário: " + v.getHorario());

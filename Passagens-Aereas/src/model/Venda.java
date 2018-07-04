@@ -1,7 +1,6 @@
 package model;
 
 import view.Menu;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -18,14 +17,13 @@ import model.DAO.VooDAO;
 //Classe de Venda
 public class Venda {
 
-    private int codigoVenda;
+    private Integer codigoVenda;
     private String horarioCompra;
     private Cliente cliente;
     private Voo voo;
 
-    public int getCodigoVenda() {
+    public Integer getCodigoVenda() {
         return codigoVenda;
-
     }
 
     public String getHorarioCompra() {
@@ -40,7 +38,7 @@ public class Venda {
         return voo;
     }
 
-    public void setCodigoVenda(int codigoVenda) {
+    public void setCodigoVenda(Integer codigoVenda) {
         this.codigoVenda = codigoVenda;
     }
 
@@ -68,7 +66,6 @@ public class Venda {
         List<Cliente> listaDeClientes = clDao.list();
         List<Aviao> frotaDeAvioes = avDao.listAviao();
         List<Voo> listaDeVoos = vDao.listaDeVoos();
-        List<Venda> extratoVenda = vdDao.listaVenda();
 
         int rgCompra = 0;
         String buscarOrigem = null;
@@ -134,7 +131,7 @@ public class Venda {
                     for (i = 0; i < listaDeClientes.size(); i++) {
                         if (rgCompra == listaDeClientes.get(i).getRg()) {
                             venda.setCliente(listaDeClientes.get(i));
-                            System.out.println("Cliente registrado!");
+                            System.out.println("Cliente encontrado!");
                         } else {
                             System.out.println("Cliente não registrado!");
                             Menu.menuPrincipal();
@@ -150,18 +147,6 @@ public class Venda {
                     System.out.println("\nCompra Realizada com Sucesso!!!");
 
                     //Irá mostrar a compra realizada pelo cliente
-                    for (i = 0; i < extratoVenda.size(); i++) {
-                        if (rgCompra == extratoVenda.get(i).getCliente().getRg()) {
-                            System.out.println(">>>Extrato da venda<<<<");
-                            System.out.println("Cliente: " + extratoVenda.get(i).getCliente().getNome());
-                            System.out.println("Voo" + "\nOrigem: " + extratoVenda.get(i).getVoo().getOrigem()
-                                    + "\nDestino: " + extratoVenda.get(i).getVoo().getDestino() + "\nHorário do voo: "
-                                    + extratoVenda.get(i).getVoo().getHorario() + "\nHoráro da compra: "
-                                    + extratoVenda.get(i).getHorarioCompra());
-
-                        }
-                    }
-
                 } else {
                     System.out.println("Trecho não disponível!");
                     Menu.menuPrincipal();
