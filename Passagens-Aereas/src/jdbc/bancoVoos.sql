@@ -21,16 +21,26 @@ codAviao integer references Aviao(codAviao) ON DELETE CASCADE ON UPDATE CASCADE
 
 CREATE TABLE Venda(
 codVenda serial PRIMARY KEY,
-voo serial references Voo(codVoo) ON DELETE CASCADE ON UPDATE CASCADE,
-cliente integer references Cliente(rg) ON DELETE CASCADE ON UPDATE CASCADE,
+idvoo serial references Voo(idVoo) ON DELETE CASCADE ON UPDATE CASCADE,
+rg integer references Cliente(rg) ON DELETE CASCADE ON UPDATE CASCADE,
 horarioCompra VARCHAR(100) NOT NULL
 );
 
-select * from voo
+select * from cliente;
 
-select * from venda
+select * from aviao;
 
-select * from cliente
+select * from voo;
 
-select * from aviao
+select * from venda;
 
+select venda.codvenda, venda.horariocompra, voo.origem, voo.destino, voo.horario, cliente.nome
+from venda inner join voo on venda.idvoo = voo.idvoo inner join cliente on venda.rg = cliente.rg;
+
+select venda.codvenda, voo.origem, cliente.nome 
+from venda inner join voo on venda.idvoo = voo.idvoo
+inner join cliente on venda.rg = cliente.rg;
+
+select venda.codvenda, voo.destino, cliente.nome 
+from venda inner join voo on venda.idvoo = voo.idvoo
+inner join cliente on venda.rg = cliente.rg;

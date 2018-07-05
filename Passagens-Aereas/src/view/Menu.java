@@ -6,6 +6,7 @@ import model.Venda;
 import model.Voo;
 import java.util.Scanner;
 import model.Cliente;
+import model.Relatorio;
 
 //Classe do Menu Principal do Programa
 public class Menu {
@@ -153,7 +154,7 @@ public class Menu {
     }
 
     @SuppressWarnings("static-access")
-    public static void menuRelatorio() {
+    public static void menuRelatorio() throws SQLException {
         Scanner e = new Scanner(System.in);
         String menuRelat = "\n=====================";
         menuRelat += "\nRelatórios";
@@ -162,7 +163,7 @@ public class Menu {
         menuRelat += "\n2- Relatório de Passageiros";
         menuRelat += "\n3- Relatório de Origem";
         menuRelat += "\n4- Relatório de Destino";
-        menuRelat += "\n5- Relatório de voos";
+        menuRelat += "\n5- Relatório de Voos";
         menuRelat += "\n6- Voltar";
         menuRelat += "\n   Escolha qual deseja acessar: ";
         System.out.println(menuRelat);
@@ -170,22 +171,22 @@ public class Menu {
         while (true) {
             switch (op) {
                 case 1:
-                    //Relatorio.relatorioPorCliente();
+                    Relatorio.relatorioPorCliente();
                     break;
                 case 2:
-                    //Relatorio.relatorioPorPassageiros();
+                    Relatorio.relatorioPorPassageiros();
                     break;
                 case 3:
-                    //Relatorio.relatorioPorOrigem();
+                    Relatorio.relatorioPorOrigem();
                     break;
                 case 4:
-                    //Relatorio.relatorioPorDestino();
+                    Relatorio.relatorioPorDestino();
                     break;
                 case 5:
-                    //Relatorio.relatorioPorVoos();
+                    Relatorio.relatorioPorVoos();
                     break;
                 case 6:
-                    //MenuPrincipal.menuPrincipal();
+                    menuPrincipal();
                     break;
                 default:
                     System.out.println("Opção Inválida");

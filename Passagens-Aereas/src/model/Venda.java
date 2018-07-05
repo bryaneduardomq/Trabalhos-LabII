@@ -105,6 +105,7 @@ public class Venda {
             } while (valida == false);
 
             for (int i = 0; i < listaDeVoos.size(); i++) {
+                //Contém problemas, será corrigido em um futuro próximo
                 if (buscarOrigem.equals(listaDeVoos.get(i).getOrigem())
                         && buscarDestino.equals(listaDeVoos.get(i).getDestino())) {
 
@@ -146,7 +147,6 @@ public class Venda {
 
                     System.out.println("\nCompra Realizada com Sucesso!!!");
 
-                    //Irá mostrar a compra realizada pelo cliente
                 } else {
                     System.out.println("Trecho não disponível!");
                     Menu.menuPrincipal();

@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 import model.DAO.ClienteDAO;
 import java.util.List;
 import view.Menu;
-//import view.MenuCliente;
 
 public class Cliente {
 
