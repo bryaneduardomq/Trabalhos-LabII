@@ -85,6 +85,46 @@ public class VooDAO {
         return listaDeVoos;
     }
 
+    public Voo listVoo(int codvoo) throws SQLException {
+        Voo v = null;
+
+        String sql = "SELECT * FROM voo WHERE idVoo= '" + codvoo + "'";
+
+        PreparedStatement prep = con.prepareStatement(sql);
+
+        ResultSet rs = prep.executeQuery();
+
+        while (rs.next()) {
+            v = new Voo();
+
+            String sqlAv = "SELECT * FROM aviao where codaviao = " + rs.getInt("codaviao");
+
+            PreparedStatement prepAv = con.prepareStatement(sqlAv);
+
+            ResultSet rsAviao = prepAv.executeQuery();
+
+            Aviao a = new Aviao();
+
+            rsAviao.next();
+
+            a.setCodigo(rsAviao.getInt("codaviao"));
+            a.setNomeAviao(rsAviao.getString("nomeaviao"));
+            a.setQtAssentos(rsAviao.getInt("qtassentos"));
+
+            v.setCodVoo(rs.getInt("idVoo"));
+            v.setOrigem(rs.getString("origem"));
+            v.setDestino(rs.getString("destino"));
+            v.setHorario(rs.getString("horario"));
+            v.setQuantidadeAssentos(rs.getInt("qtAssentosVoo"));
+            v.setAviao(a);
+
+        }
+
+        prep.close();
+
+        return v;
+    }
+
     public void updateVoo(Voo voo) throws SQLException {
 
         String sql = "UPDATE voo SET horario=?, aviao=? WHERE idvoo=  '" + voo.getCodVoo() + "'";

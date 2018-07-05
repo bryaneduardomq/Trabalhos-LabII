@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,7 +46,7 @@ public class Cliente {
     }
 
     // Método para cadastrar o cliente
-    public static void cadastrarCliente() throws SQLException {
+    public static void cadastrarCliente() throws SQLException, ParseException {
         Cliente c = new Cliente();
         ClienteDAO clDAO = new ClienteDAO();
         boolean valida = false;
@@ -71,6 +72,8 @@ public class Cliente {
 
         } while (valida == false);
 
+        valida = false;
+
         do {
             c.nome = digita("Digite o nome do cliente: ");
             Pattern padrao = Pattern.compile("[0-9]");
@@ -81,7 +84,7 @@ public class Cliente {
                 valida = true;
             }
 
-        } while (valida == false);
+        } while (valida == false || c.nome.equals(""));
 
         do {
             c.contato = digita("Digite o contato do cliente: ");
@@ -94,7 +97,7 @@ public class Cliente {
                 valida = true;
             }
 
-        } while (valida == false);
+        } while (valida == false || c.contato.equals(""));
 
         clDAO.insert(c);
 
@@ -104,7 +107,7 @@ public class Cliente {
 
     // Método para visualização dos clientes cadastrados
     @SuppressWarnings("static-access")
-    public static void visualizarClientes() throws SQLException {
+    public static void visualizarClientes() throws SQLException, ParseException {
         ClienteDAO clDao = new ClienteDAO();
         List<Cliente> listaDeClientes = clDao.list();
 
@@ -126,12 +129,10 @@ public class Cliente {
 
     // Método para atualizar os dados do cliente 
     @SuppressWarnings("static-access")
-    public static void atualizarDadosCliente() throws SQLException {
+    public static void atualizarDadosCliente() throws SQLException, ParseException {
         ClienteDAO clDao = new ClienteDAO();
 
         List<Cliente> listaDeClientes = clDao.list();
-
-        Cliente c = new Cliente();
 
         boolean valida = false;
         int rgAtualiza = 0;
@@ -148,7 +149,7 @@ public class Cliente {
                     for (int i = 0; i < listaDeClientes.size(); i++) {
                         if (rgAtualiza != listaDeClientes.get(i).getRg()) {
                             System.out.println("RG não cadastrado!");
-                            Menu.menuPrincipal();
+                            Menu.menuCliente();
                         }
                     }
                     valida = true;
@@ -161,6 +162,8 @@ public class Cliente {
 
             Cliente listRG = clDao.listRG(rgAtualiza);
 
+            System.out.println("Cliente encontrado!");
+
             do {
                 try {
                     atualiza = Integer.parseInt(
@@ -172,8 +175,6 @@ public class Cliente {
                 }
 
             } while (valida == false);
-
-            System.out.println("Cliente encontrado!");
 
             if (atualiza == 1) {
 
@@ -192,12 +193,10 @@ public class Cliente {
 
 //Método para excluir o cliente
     @SuppressWarnings("static-access")
-    public static void excluirCliente() throws SQLException {
+    public static void excluirCliente() throws SQLException, ParseException {
         ClienteDAO clDao = new ClienteDAO();
 
         List<Cliente> listaDeClientes = clDao.list();
-
-        Cliente c = new Cliente();
 
         int rgExcluido = 0;
 
@@ -210,6 +209,12 @@ public class Cliente {
             do {
                 try {
                     rgExcluido = Integer.parseInt(digita("Digite o rg do cliente a ser excluído: "));
+                    for (int i = 0; i < listaDeClientes.size(); i++) {
+                        if (rgExcluido != listaDeClientes.get(i).getRg()) {
+                            System.out.println("RG não cadastrado!!!");
+                            Menu.menuCliente();
+                        }
+                    }
                     valida = true;
                 } catch (NumberFormatException ex) {
                     System.out.println("Erro: " + ex);
@@ -218,17 +223,9 @@ public class Cliente {
 
             } while (valida == false);
 
-            for (int i = 0; i < listaDeClientes.size(); i++) {
-                if (rgExcluido == listaDeClientes.get(i).getRg()) {
+            Cliente listRG = clDao.listRG(rgExcluido);
 
-                    c = listaDeClientes.get(i);
-                } else {
-                    System.out.println("RG não cadastrado!!!");
-                    Menu.menuCliente();
-                }
-
-            }
-            clDao.delete(c);
+            clDao.delete(listRG);
             Menu.menuCliente();
         }
 

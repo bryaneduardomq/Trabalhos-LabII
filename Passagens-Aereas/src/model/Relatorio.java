@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import model.DAO.ClienteDAO;
@@ -42,7 +43,7 @@ public class Relatorio {
         this.venda = venda;
     }
 
-    public static void relatorioPorCliente() throws SQLException {
+    public static void relatorioPorCliente() throws SQLException, ParseException {
         ClienteDAO clDao = new ClienteDAO();
         List<Cliente> listaDeClientes = clDao.list();
 
@@ -101,7 +102,7 @@ public class Relatorio {
         return listPassageiros;
     }
 
-    public static void relatorioPorPassageiros() throws SQLException {
+    public static void relatorioPorPassageiros() throws SQLException, ParseException {
         Relatorio r = new Relatorio();
 
         List<Relatorio> passageiros = r.listaPassageiros();
@@ -163,7 +164,7 @@ public class Relatorio {
         return listaOrigem;
     }
 
-    public static void relatorioPorOrigem() throws SQLException {
+    public static void relatorioPorOrigem() throws SQLException, ParseException {
         Relatorio r = new Relatorio();
         List<Relatorio> origem = r.listaOrigem();
 
@@ -217,7 +218,7 @@ public class Relatorio {
         return listaDestino;
     }
 
-    public static void relatorioPorDestino() throws SQLException {
+    public static void relatorioPorDestino() throws SQLException, ParseException {
         Relatorio r = new Relatorio();
         List<Relatorio> destino = r.listaDestino();
 
@@ -236,7 +237,7 @@ public class Relatorio {
         Menu.menuPrincipal();
     }
 
-    public static void relatorioPorVoos() throws SQLException {
+    public static void relatorioPorVoos() throws SQLException, ParseException {
         VooDAO vDao = new VooDAO();
 
         List<Voo> listaDeVoos = vDao.listaDeVoos();

@@ -1,6 +1,9 @@
 package model;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -74,7 +77,7 @@ public class Voo {
 
     //Método de cadastro de voo
     @SuppressWarnings("static-access")
-    public static void cadastrarVoo() throws SQLException {
+    public static void cadastrarVoo() throws SQLException, ParseException {
         Voo v = new Voo();
         VooDAO vDao = new VooDAO();
         AviaoDAO avDao = new AviaoDAO();
@@ -95,7 +98,7 @@ public class Voo {
                 valida = true;
             }
 
-        } while (valida == false);
+        } while (valida == false || v.origem.equals(""));
 
         do {
             v.destino = digita("Digite o destino do voo: ");
@@ -108,13 +111,22 @@ public class Voo {
                 valida = true;
             }
 
-        } while (valida == false);
+        } while (valida == false || v.destino.equals(""));
 
-        v.horario = digita("Digite o horário do voo: ");
+        SimpleDateFormat form = new SimpleDateFormat("HH:mm");
 
+        Date date = new Date(System.currentTimeMillis());
+
+        v.horario = form.format(date);
         do {
             try {
                 cod = Integer.parseInt(digita("Digite o código do avião deste voo: "));
+                for (int i = 0; i < frotaDeAvioes.size(); i++) {
+                    if (cod != frotaDeAvioes.get(i).getCodigo()) {
+                        System.out.println("Código não encontrado!");
+                        Menu.menuVoo();
+                    }
+                }
                 valida = true;
             } catch (NumberFormatException ex) {
                 System.out.println("Erro: " + ex);
@@ -123,16 +135,10 @@ public class Voo {
 
         } while (valida == false);
 
-        for (int i = 0; i < frotaDeAvioes.size(); i++) {
-            if (cod == frotaDeAvioes.get(i).getCodigo()) {
-                v.aviao = frotaDeAvioes.get(i);
-                v.quantidadeAssentos = frotaDeAvioes.get(i).getQtAssentos();
+        Aviao av = avDao.listaCod(cod);
 
-            } else {
-                System.out.println("Avião não cadastrado");
-                Menu.menuVoo();
-            }
-        }
+        v.aviao = av;
+        v.quantidadeAssentos = av.getQtAssentos();
 
         vDao.insertVoo(v);
 
@@ -141,7 +147,7 @@ public class Voo {
 
     //Método para visualizar dados do voo
     @SuppressWarnings("static-access")
-    public static void visualizarVoo() throws SQLException {
+    public static void visualizarVoo() throws SQLException, ParseException {
         VooDAO vDao = new VooDAO();
 
         List<Voo> listaDeVoos = vDao.listaDeVoos();
@@ -159,15 +165,52 @@ public class Voo {
                 System.out.println("\nAvião: " + v.getAviao().getNomeAviao() + "\nCódigo do Avião: "
                         + v.getAviao().getCodigo() + "\nQuantidade de Assentos do Avião: "
                         + v.getAviao().getQtAssentos());
+                System.out.println();
             }
         }
         Menu.menuVoo();
     }
 
-    public static void atualizarVoo() {
+    public static void atualizarVoo() throws SQLException, ParseException {
+
     }
 
-    public static void deletarVoo() {
+    public static void deletarVoo() throws SQLException, ParseException {
+        VooDAO vDao = new VooDAO();
+
+        List<Voo> listaVoo = vDao.listaDeVoos();
+
+        int codvoo = 0;
+
+        boolean valida = false;
+
+        if (listaVoo.isEmpty()) {
+            System.out.println("Voo não cadastrado!");
+            Menu.menuVoo();
+        } else {
+            do {
+                try {
+                    codvoo = Integer.parseInt(digita("Digite o rg do cliente a ser excluído: "));
+                    for (int i = 0; i < listaVoo.size(); i++) {
+                        if (codvoo != listaVoo.get(i).getCodVoo()) {
+                            System.out.println("Código não cadastrado!!!");
+                            Menu.menuVoo();
+                        }
+                    }
+                    valida = true;
+                } catch (NumberFormatException ex) {
+                    System.out.println("Erro: " + ex);
+                    valida = false;
+                }
+
+            } while (valida == false);
+
+            Voo listaCod = vDao.listVoo(codvoo);
+
+            vDao.deleteVoo(listaCod);
+            Menu.menuVoo();
+
+        }
     }
 
     private static String digita(String mens) {

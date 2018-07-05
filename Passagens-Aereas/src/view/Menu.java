@@ -1,6 +1,7 @@
 package view;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import model.Aviao;
 import model.Venda;
 import model.Voo;
@@ -13,7 +14,7 @@ public class Menu {
 
     //Método do menu principal
     @SuppressWarnings("static-access")
-    public static void menuPrincipal() throws SQLException {
+    public static void menuPrincipal() throws SQLException, ParseException {
         Scanner e = new Scanner(System.in);
         String menu = "\n===========================================";
         menu += "\n>>>Controle de Vendas de Passagens Aéreas<<<";
@@ -55,7 +56,7 @@ public class Menu {
         }
     }
 
-    public static void menuCliente() throws SQLException {
+    public static void menuCliente() throws SQLException, ParseException {
         Scanner e = new Scanner(System.in);
         String mCliente = "\n=========================";
         mCliente += "\nMenu Cliente";
@@ -92,7 +93,7 @@ public class Menu {
         }
     }
 
-    public static void menuAviao() throws SQLException {
+    public static void menuAviao() throws SQLException, ParseException {
         Scanner e = new Scanner(System.in);
         String mAviao = "\n=========================";
         mAviao += "\nMenu de Aviões";
@@ -130,7 +131,7 @@ public class Menu {
     }
 
     @SuppressWarnings("static-access")
-    public static void menuVoo() throws SQLException {
+    public static void menuVoo() throws SQLException, ParseException {
         Scanner e = new Scanner(System.in);
         String mVoo = "\n=========================";
         mVoo += "\nMenu de Voos";
@@ -167,7 +168,7 @@ public class Menu {
     }
 
     @SuppressWarnings("static-access")
-    public static void menuRelatorio() throws SQLException {
+    public static void menuRelatorio() throws SQLException, ParseException {
         Scanner e = new Scanner(System.in);
         String menuRelat = "\n=====================";
         menuRelat += "\nRelatórios";

@@ -10,7 +10,7 @@ public class Conexao {
         Connection con = null;
 
         try {
-            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/voos", "postgres", "admin");
+            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/voos", "postgres", "1234");
             //System.out.println("Conectado com Sucesso");
         } catch (SQLException e) {
             System.out.println("Falha na conexão" + e);

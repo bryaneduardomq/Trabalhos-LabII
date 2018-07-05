@@ -65,6 +65,28 @@ public class AviaoDAO {
 
     }
 
+    public Aviao listaCod(int cod) throws SQLException {
+        Aviao a = null;
+
+        String sql = "SELECT * FROM aviao WHERE codAviao= '" + cod + "'";
+
+        PreparedStatement prep = con.prepareStatement(sql);
+
+        ResultSet rs = prep.executeQuery();
+
+        while (rs.next()) {
+            a = new Aviao();
+
+            a.setCodigo(rs.getInt("codAviao"));
+            a.setNomeAviao(rs.getString("nomeAviao"));
+            a.setQtAssentos(rs.getInt("qtAssentos"));
+        }
+
+        prep.close();
+
+        return a;
+    }
+
     public void updateAviao(Aviao aviao) throws SQLException {
 
         String sql = "UPDATE aviao SET nomeAviao=?, qtassentos=? WHERE codAviao='" + aviao.getCodigo() + "'";
