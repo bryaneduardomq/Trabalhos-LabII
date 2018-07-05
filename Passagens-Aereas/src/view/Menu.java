@@ -94,25 +94,32 @@ public class Menu {
 
     public static void menuAviao() throws SQLException {
         Scanner e = new Scanner(System.in);
-        Aviao aviao = new Aviao();
         String mAviao = "\n=========================";
         mAviao += "\nMenu de Aviões";
         mAviao += "\n=========================";
         mAviao += "\n1- Cadastrar Avião";
         mAviao += "\n2- Visualizar Frota de Aviões";
-        mAviao += "\n3- Voltar";
+        mAviao += "\n3- Atualizar Avião";
+        mAviao += "\n4- Excluir Avião";
+        mAviao += "\n5- Voltar";
         mAviao += "\n   Escolha: ";
         System.out.println(mAviao);
         int opcao = e.nextInt();
         while (true) {
             switch (opcao) {
                 case 1:
-                    aviao.cadastrarAviao();
+                    Aviao.cadastrarAviao();
                     break;
                 case 2:
-                    aviao.visualizarFrota();
+                    Aviao.visualizarFrota();
                     break;
                 case 3:
+                    Aviao.atualizarAviao();
+                    break;
+                case 4:
+                    Aviao.deletarAviao();
+                    break;
+                case 5:
                     menuPrincipal();
                     break;
                 default:
@@ -125,25 +132,31 @@ public class Menu {
     @SuppressWarnings("static-access")
     public static void menuVoo() throws SQLException {
         Scanner e = new Scanner(System.in);
-        Voo voo = new Voo();
         String mVoo = "\n=========================";
         mVoo += "\nMenu de Voos";
         mVoo += "\n=========================";
         mVoo += "\n1- Cadastrar Voo";
         mVoo += "\n2- Visualizar Total de Voos";
-        mVoo += "\n3- Voltar";
+        mVoo += "\n3- Atualizar Voo";
+        mVoo += "\n4- Excluir Voo";
+        mVoo += "\n5- Voltar";
         mVoo += "\n   Escolha: ";
         System.out.println(mVoo);
         int opcao = e.nextInt();
         while (true) {
             switch (opcao) {
                 case 1:
-                    voo.cadastrarVoo();
+                    Voo.cadastrarVoo();
                     break;
                 case 2:
-                    voo.visualizarVoo();
+                    Voo.visualizarVoo();
                     break;
                 case 3:
+                    Voo.atualizarVoo();
+                    break;
+                case 4:
+                    Voo.deletarVoo();
+                case 5:
                     menuPrincipal();
                     break;
                 default:

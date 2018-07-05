@@ -63,6 +63,28 @@ public class ClienteDAO {
         return listaDeClientes;
     }
 
+    public Cliente listRG(int rg) throws SQLException {
+
+        Cliente c = null;
+
+        String sql = "SELECT * from cliente WHERE rg= '" + rg + "'";
+
+        PreparedStatement prep = con.prepareStatement(sql);
+
+        ResultSet rs = prep.executeQuery();
+
+        while (rs.next()) {
+            c = new Cliente();
+
+            c.setRg(rs.getInt("rg"));
+            c.setNome(rs.getString("nome"));
+            c.setContato(rs.getString("contato"));
+        }
+        prep.close();
+
+        return c;
+    }
+
     public void update(Cliente cliente) throws SQLException {
 
         String sql = "UPDATE cliente SET nome=?, contato=? WHERE rg = '" + cliente.getRg() + "'";

@@ -87,9 +87,34 @@ public class VooDAO {
 
     public void updateVoo(Voo voo) throws SQLException {
 
+        String sql = "UPDATE voo SET horario=?, aviao=? WHERE idvoo=  '" + voo.getCodVoo() + "'";
+
+        PreparedStatement prep = con.prepareStatement(sql);
+
+        String horario = voo.getHorario();
+        int cod = voo.getCodVoo();
+
+        prep.setString(1, horario);
+        prep.setInt(2, cod);
+
+        prep.execute();
+        prep.close();
+
+        System.out.println("Registro Voo -alterado- com sucesso");
+
     }
 
     public void deleteVoo(Voo voo) throws SQLException {
+
+        String sql = "DELETE FROM voo WHERE rg = '" + voo.getCodVoo() + "'";
+
+        PreparedStatement prepara = con.prepareStatement(sql);
+
+        prepara.executeUpdate();
+
+        prepara.close();
+
+        System.out.println("Registro Voo -deletado- com sucesso");
 
     }
 

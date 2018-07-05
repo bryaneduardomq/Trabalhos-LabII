@@ -89,4 +89,18 @@ public class VendaDAO {
         return listaVenda;
     }
 
+    public void deleteVenda(Venda venda) throws SQLException {
+
+        String sql = "DELETE FROM venda WHERE codvenda= '" + venda.getCodigoVenda() + "'";
+
+        PreparedStatement prep = con.prepareStatement(sql);
+
+        prep.executeUpdate();
+
+        prep.close();
+
+        System.out.println("Registro Venda -deletado- com sucesso");
+
+    }
+
 }

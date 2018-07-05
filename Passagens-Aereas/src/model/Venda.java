@@ -129,15 +129,9 @@ public class Venda {
 
                     } while (valida == false);
 
-                    for (i = 0; i < listaDeClientes.size(); i++) {
-                        if (rgCompra == listaDeClientes.get(i).getRg()) {
-                            venda.setCliente(listaDeClientes.get(i));
-                            System.out.println("Cliente encontrado!");
-                        } else {
-                            System.out.println("Cliente não registrado!");
-                            Menu.menuPrincipal();
-                        }
-                    }
+                    Cliente listaRG = clDao.listRG(rgCompra);
+
+                    venda.setCliente(listaRG);
 
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date date = new Date(System.currentTimeMillis());

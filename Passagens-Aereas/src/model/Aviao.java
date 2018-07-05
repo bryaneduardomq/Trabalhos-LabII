@@ -10,36 +10,36 @@ import view.Menu;
 
 //Classe Avião
 public class Aviao {
-    
+
     private int codigo;
     private String nomeAviao;
     private int qtAssentos;
 
     //Construtor
     public Aviao() {
-        
+
     }
-    
+
     public int getCodigo() {
         return codigo;
     }
-    
+
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-    
+
     public String getNomeAviao() {
         return nomeAviao;
     }
-    
+
     public void setNomeAviao(String nomeAviao) {
         this.nomeAviao = nomeAviao;
     }
-    
+
     public int getQtAssentos() {
         return qtAssentos;
     }
-    
+
     public void setQtAssentos(int qtAssentos) {
         this.qtAssentos = qtAssentos;
     }
@@ -50,7 +50,7 @@ public class Aviao {
         Aviao a = new Aviao();
         AviaoDAO avDao = new AviaoDAO();
         boolean valida = false;
-        
+
         do {
             try {
                 a.codigo = Integer.parseInt(digita("Digite o código do avião: "));
@@ -59,24 +59,13 @@ public class Aviao {
                 System.out.println("Erro: " + ex);
                 valida = false;
             }
-            
+
         } while (valida == false);
-        
+
         valida = false;
-        
-        //tirar do-while
-        do {
-            a.nomeAviao = digita("Digite o nome do avião: ");
-            Pattern padrao = Pattern.compile("[0-9]");
-            Matcher combinacao = padrao.matcher(a.getNomeAviao());
-            if (combinacao.find()) {
-                System.out.println("Não pode conter números!");
-            } else {
-                valida = true;
-            }
-            
-        } while (valida == false);
-        
+
+        a.nomeAviao = digita("Digite o nome do avião: ");
+
         do {
             try {
                 a.qtAssentos = Integer.parseInt(digita("Digite a quantidade de assentos do avião: "));
@@ -85,22 +74,22 @@ public class Aviao {
                 System.out.println("Erro: " + ex);
                 valida = false;
             }
-            
+
         } while (valida == false);
-        
+
         avDao.insertAviao(a);
-        
+
         Menu.menuAviao();
-        
+
     }
 
     //Método para visualizar frota de aviões
     @SuppressWarnings("static-access")
     public static void visualizarFrota() throws SQLException {
         AviaoDAO avDao = new AviaoDAO();
-        
+
         List<Aviao> frotaDeAvioes = avDao.listAviao();
-        
+
         if (frotaDeAvioes.isEmpty()) {
             System.out.println("Nenhum Avião Cadastrado!!!");
             Menu.menuAviao();
@@ -113,14 +102,33 @@ public class Aviao {
             }
             Menu.menuAviao();
         }
+
+    }
+
+    public static void atualizarAviao() throws SQLException {
+        AviaoDAO avDao = new AviaoDAO();
+        
+        List<Aviao> listaAviao = avDao.listAviao();
+        
+        Aviao a = new Aviao();
+        
+        if(listaAviao.isEmpty()){
+            System.out.println("Avião não cadastrado.");
+        } else{
+            
+        }
+        
         
     }
-    
+
+    public static void deletarAviao() {
+    }
+
     private static String digita(String mens) {
         @SuppressWarnings("resource")
         Scanner e = new Scanner(System.in);
         System.out.println(mens);
         return e.nextLine();
     }
-    
+
 }

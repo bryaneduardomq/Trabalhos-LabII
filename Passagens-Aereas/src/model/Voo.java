@@ -164,6 +164,12 @@ public class Voo {
         Menu.menuVoo();
     }
 
+    public static void atualizarVoo() {
+    }
+
+    public static void deletarVoo() {
+    }
+
     private static String digita(String mens) {
         @SuppressWarnings("resource")
         Scanner e = new Scanner(System.in);

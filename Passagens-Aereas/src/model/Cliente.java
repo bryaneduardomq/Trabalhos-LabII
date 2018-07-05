@@ -117,6 +117,7 @@ public class Cliente {
                 System.out.println("Nome: " + c.getNome());
                 System.out.println("RG: " + c.getRg());
                 System.out.println("Contato: " + c.getContato());
+                System.out.println();
             }
             Menu.menuCliente();
         }
@@ -144,6 +145,12 @@ public class Cliente {
                 try {
                     rgAtualiza = Integer.parseInt(
                             digita("Qual cliente gostaria de atualizar o cadastro? Digite o RG dele(a):"));
+                    for (int i = 0; i < listaDeClientes.size(); i++) {
+                        if (rgAtualiza != listaDeClientes.get(i).getRg()) {
+                            System.out.println("RG não cadastrado!");
+                            Menu.menuPrincipal();
+                        }
+                    }
                     valida = true;
                 } catch (NumberFormatException ex) {
                     System.out.println("Erro: " + ex);
@@ -152,45 +159,38 @@ public class Cliente {
 
             } while (valida == false);
 
-            for (int i = 0; i < listaDeClientes.size(); i++) {
-                if (rgAtualiza == listaDeClientes.get(i).getRg()) {
-                    do {
-                        try {
-                            atualiza = Integer.parseInt(
-                                    digita(("Digite o dado que deve ser alterado: 1 para nome, 2 para contato.")));
-                            valida = true;
-                        } catch (NumberFormatException ex) {
-                            System.out.println("Erro: " + ex);
-                            valida = false;
-                        }
+            Cliente listRG = clDao.listRG(rgAtualiza);
 
-                    } while (valida == false);
-
-                    System.out.println("Cliente encontrado!");
-
-                    if (atualiza == 1) {
-
-                        listaDeClientes.get(i).setNome(digita("Digite o nome: "));
-                        c = listaDeClientes.get(i);
-                    }
-                    if (atualiza == 2) {
-                        listaDeClientes.get(i).setContato(digita("Digite o contato: "));
-                        c = listaDeClientes.get(i);
-                    }
-
-                } else {
-                    System.out.println("RG não cadastrado!");
-                    Menu.menuCliente();
+            do {
+                try {
+                    atualiza = Integer.parseInt(
+                            digita(("Digite o dado que deve ser alterado: 1 para nome, 2 para contato.")));
+                    valida = true;
+                } catch (NumberFormatException ex) {
+                    System.out.println("Erro: " + ex);
+                    valida = false;
                 }
+
+            } while (valida == false);
+
+            System.out.println("Cliente encontrado!");
+
+            if (atualiza == 1) {
+
+                listRG.setNome(digita("Digite o nome: "));
+                clDao.update(listRG);
+            }
+            if (atualiza == 2) {
+                listRG.setContato(digita("Digite o contato: "));
+                clDao.update(listRG);
             }
 
-            clDao.update(c);
-            Menu.menuCliente();
         }
 
+        Menu.menuCliente();
     }
 
-    //Método para excluir o cliente
+//Método para excluir o cliente
     @SuppressWarnings("static-access")
     public static void excluirCliente() throws SQLException {
         ClienteDAO clDao = new ClienteDAO();
@@ -198,8 +198,11 @@ public class Cliente {
         List<Cliente> listaDeClientes = clDao.list();
 
         Cliente c = new Cliente();
+
         int rgExcluido = 0;
+
         boolean valida = false;
+
         if (listaDeClientes.isEmpty()) {
             System.out.println("Cliente não cadastrado!!!");
             Menu.menuCliente();
