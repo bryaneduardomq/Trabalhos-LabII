@@ -146,12 +146,35 @@ public class Cliente {
                 try {
                     rgAtualiza = Integer.parseInt(
                             digita("Qual cliente gostaria de atualizar o cadastro? Digite o RG dele(a):"));
-                    for (int i = 0; i < listaDeClientes.size(); i++) {
-                        if (rgAtualiza != listaDeClientes.get(i).getRg()) {
-                            System.out.println("RG não cadastrado!");
-                            Menu.menuCliente();
+                    Cliente listRG = clDao.listRG(rgAtualiza);
+                    if (rgAtualiza == listRG.getRg()) {
+                        System.out.println("Cliente encontrado!");
+                        do {
+                            try {
+                                atualiza = Integer.parseInt(
+                                        digita(("Digite o dado que deve ser alterado: 1 para nome, 2 para contato.")));
+                                valida = true;
+                            } catch (NumberFormatException ex) {
+                                System.out.println("Erro: " + ex);
+                                valida = false;
+                            }
+
+                        } while (valida == false);
+
+                        if (atualiza == 1) {
+
+                            listRG.setNome(digita("Digite o nome: "));
+                            clDao.update(listRG);
                         }
+                        if (atualiza == 2) {
+                            listRG.setContato(digita("Digite o contato: "));
+                            clDao.update(listRG);
+                        }
+                    } else {
+                        System.out.println("RG não cadastrado!");
+                        Menu.menuCliente();
                     }
+
                     valida = true;
                 } catch (NumberFormatException ex) {
                     System.out.println("Erro: " + ex);
@@ -159,32 +182,6 @@ public class Cliente {
                 }
 
             } while (valida == false);
-
-            Cliente listRG = clDao.listRG(rgAtualiza);
-
-            System.out.println("Cliente encontrado!");
-
-            do {
-                try {
-                    atualiza = Integer.parseInt(
-                            digita(("Digite o dado que deve ser alterado: 1 para nome, 2 para contato.")));
-                    valida = true;
-                } catch (NumberFormatException ex) {
-                    System.out.println("Erro: " + ex);
-                    valida = false;
-                }
-
-            } while (valida == false);
-
-            if (atualiza == 1) {
-
-                listRG.setNome(digita("Digite o nome: "));
-                clDao.update(listRG);
-            }
-            if (atualiza == 2) {
-                listRG.setContato(digita("Digite o contato: "));
-                clDao.update(listRG);
-            }
 
         }
 
@@ -209,12 +206,16 @@ public class Cliente {
             do {
                 try {
                     rgExcluido = Integer.parseInt(digita("Digite o rg do cliente a ser excluído: "));
-                    for (int i = 0; i < listaDeClientes.size(); i++) {
-                        if (rgExcluido != listaDeClientes.get(i).getRg()) {
-                            System.out.println("RG não cadastrado!!!");
-                            Menu.menuCliente();
-                        }
+                    Cliente listRG = clDao.listRG(rgExcluido);
+
+                    if (rgExcluido == listRG.getRg()) {
+                        clDao.delete(listRG);
+                        Menu.menuCliente();
+                    } else {
+                        System.out.println("RG não cadastrado!!!");
+                        Menu.menuCliente();
                     }
+
                     valida = true;
                 } catch (NumberFormatException ex) {
                     System.out.println("Erro: " + ex);
@@ -223,9 +224,6 @@ public class Cliente {
 
             } while (valida == false);
 
-            Cliente listRG = clDao.listRG(rgExcluido);
-
-            clDao.delete(listRG);
             Menu.menuCliente();
         }
 
@@ -233,14 +231,13 @@ public class Cliente {
 
     private static boolean verificaRepetido(int rg) throws SQLException {
         ClienteDAO clDao = new ClienteDAO();
-        List<Cliente> listaDeClientes = clDao.list();
+
+        Cliente c = clDao.listRG(rg);
 
         boolean rgDuplicado = false;
 
-        for (int i = 0; i < listaDeClientes.size(); i++) {
-            if (listaDeClientes.get(i).getRg() == rg) {
-                rgDuplicado = true;
-            }
+        if (c.getRg() == rg) {
+            rgDuplicado = true;
         }
 
         return rgDuplicado;

@@ -121,11 +121,16 @@ public class Voo {
         do {
             try {
                 cod = Integer.parseInt(digita("Digite o código do avião deste voo: "));
-                for (int i = 0; i < frotaDeAvioes.size(); i++) {
-                    if (cod != frotaDeAvioes.get(i).getCodigo()) {
-                        System.out.println("Código não encontrado!");
-                        Menu.menuVoo();
-                    }
+                Aviao av = avDao.listaCod(cod);
+                if (cod == av.getCodigo()) {
+                    v.aviao = av;
+                    v.quantidadeAssentos = av.getQtAssentos();
+
+                    vDao.insertVoo(v);
+                    Menu.menuVoo();
+                } else {
+                    System.out.println("Código não encontrado!");
+                    Menu.menuVoo();
                 }
                 valida = true;
             } catch (NumberFormatException ex) {
@@ -134,13 +139,6 @@ public class Voo {
             }
 
         } while (valida == false);
-
-        Aviao av = avDao.listaCod(cod);
-
-        v.aviao = av;
-        v.quantidadeAssentos = av.getQtAssentos();
-
-        vDao.insertVoo(v);
 
         Menu.menuVoo();
     }
@@ -191,11 +189,13 @@ public class Voo {
             do {
                 try {
                     codvoo = Integer.parseInt(digita("Digite o rg do cliente a ser excluído: "));
-                    for (int i = 0; i < listaVoo.size(); i++) {
-                        if (codvoo != listaVoo.get(i).getCodVoo()) {
-                            System.out.println("Código não cadastrado!!!");
-                            Menu.menuVoo();
-                        }
+                    Voo listaCod = vDao.listVoo(codvoo);
+                    if (codvoo == listaCod.getCodVoo()) {
+                        vDao.deleteVoo(listaCod);
+                        Menu.menuVoo();
+                    } else {
+                        System.out.println("Código não cadastrado!!!");
+                        Menu.menuVoo();
                     }
                     valida = true;
                 } catch (NumberFormatException ex) {
@@ -205,9 +205,6 @@ public class Voo {
 
             } while (valida == false);
 
-            Voo listaCod = vDao.listVoo(codvoo);
-
-            vDao.deleteVoo(listaCod);
             Menu.menuVoo();
 
         }

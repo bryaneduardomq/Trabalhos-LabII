@@ -121,12 +121,34 @@ public class Aviao {
             do {
                 try {
                     codAviao = Integer.parseInt(digita("Digite o código do avião a ser atualizado"));
-                    for (int i = 0; i < listaAviao.size(); i++) {
-                        if (codAviao != listaAviao.get(i).getCodigo()) {
-                            System.out.println("Código não encontrado!");
-                            Menu.menuAviao();
+                    Aviao cod = avDao.listaCod(codAviao);
+                    if (codAviao == cod.getCodigo()) {
+                        int atAviao = 0;
+                        do {
+                            try {
+                                atAviao = Integer.parseInt(digita("Qual dado quer atualizar? 1 - Nome do Aviao, 2 - Qt de Assentos"));
+                                valida = true;
+                            } catch (NumberFormatException ex) {
+                                System.out.println("Erro: " + ex);
+                                valida = false;
+                            }
+
+                        } while (valida == false);
+
+                        if (atAviao == 1) {
+                            cod.setNomeAviao(digita("Digite o nome atualizado do avião: "));
+                            avDao.updateAviao(cod);
                         }
+
+                        if (atAviao == 2) {
+                            cod.setQtAssentos(Integer.parseInt("Digite a quantidade de assentos atualizada do avião: "));
+                            avDao.updateAviao(cod);
+                        }
+                    } else {
+                        System.out.println("Código não encontrado!");
+                        Menu.menuAviao();
                     }
+
                     valida = true;
                 } catch (NumberFormatException ex) {
                     System.out.println("Erro: " + ex);
@@ -134,33 +156,6 @@ public class Aviao {
                 }
 
             } while (valida == false);
-
-            valida = false;
-
-            Aviao cod = avDao.listaCod(codAviao);
-
-            int atAviao = 0;
-
-            do {
-                try {
-                    atAviao = Integer.parseInt(digita("Qual dado quer atualizar? 1 - Nome do Aviao, 2 - Qt de Assentos"));
-                    valida = true;
-                } catch (NumberFormatException ex) {
-                    System.out.println("Erro: " + ex);
-                    valida = false;
-                }
-
-            } while (valida == false || atAviao != 1 || atAviao != 2);
-
-            if (atAviao == 1) {
-                cod.setNomeAviao(digita("Digite o nome atualizado do avião: "));
-                avDao.updateAviao(cod);
-            }
-
-            if (atAviao == 2) {
-                cod.setQtAssentos(Integer.parseInt("Digite a quantidade de assentos atualizada do avião: "));
-                avDao.updateAviao(cod);
-            }
 
         }
         Menu.menuAviao();
@@ -183,12 +178,15 @@ public class Aviao {
             do {
                 try {
                     cod = Integer.parseInt(digita("Digite o rg do cliente a ser excluído: "));
-                    for (int i = 0; i < listaAviao.size(); i++) {
-                        if (cod != listaAviao.get(i).getCodigo()) {
-                            System.out.println("Código não cadastrado!!!");
-                            Menu.menuAviao();
-                        }
+                    Aviao listCod = avDao.listaCod(cod);
+                    if (cod == listCod.getCodigo()) {
+                        avDao.deleteAviao(listCod);
+                        Menu.menuAviao();
+                    } else {
+                        System.out.println("Código não cadastrado!!!");
+                        Menu.menuAviao();
                     }
+
                     valida = true;
                 } catch (NumberFormatException ex) {
                     System.out.println("Erro: " + ex);
@@ -197,9 +195,6 @@ public class Aviao {
 
             } while (valida == false);
 
-            Aviao listCod = avDao.listaCod(cod);
-
-            avDao.deleteAviao(listCod);
             Menu.menuAviao();
 
         }

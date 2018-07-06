@@ -93,14 +93,48 @@ public class Venda {
             do {
                 try {
                     idVoo = Integer.parseInt(digita("Digite o código do voo que deseja comprar uma passagem: "));
-                    for (int i = 0; i < listaDeVoos.size(); i++) {
-                        if (idVoo != listaDeVoos.get(i).getCodVoo()) {
-                            System.out.println("Trecho não disponível!");
+                    Voo v = vDao.listVoo(idVoo);
+
+                    if (idVoo == v.getCodVoo()) {
+                        System.out.println("Trecho disponível!");
+                        v.setQuantidadeAssentos(v.getQuantidadeAssentos() - 1);
+                        if (v.getQuantidadeAssentos() == 0) {
+                            System.out.println("Voo Lotado!");
                             Menu.menuPrincipal();
                         }
+
+                        venda.setVoo(v);
+
+                        do {
+                            try {
+                                rgCompra = Integer.parseInt(digita("RG do Cliente que realizou a compra: "));
+                                valida = true;
+                            } catch (NumberFormatException ex) {
+                                System.out.println("Erro: " + ex);
+                                valida = false;
+                            }
+
+                        } while (valida == false);
+
+                        Cliente listaRG = clDao.listRG(rgCompra);
+
+                        venda.setCliente(listaRG);
+
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date date = new Date(System.currentTimeMillis());
+                        venda.setHorarioCompra(dateFormat.format(date));
+
+                        vdDao.insertVenda(venda);
+
+                        System.out.println("\nCompra Realizada com Sucesso!!!");
+                        Menu.menuPrincipal();
+                    } else {
+                        System.out.println("Trecho não disponível!");
+                        Menu.menuPrincipal();
                     }
 
                     valida = true;
+
                 } catch (NumberFormatException ex) {
                     System.out.println("Erro: " + ex);
                     valida = false;
@@ -108,39 +142,6 @@ public class Venda {
 
             } while (valida == false);
 
-            Voo v = vDao.listVoo(idVoo);
-
-            System.out.println("Trecho disponível!");
-            v.setQuantidadeAssentos(v.getQuantidadeAssentos() - 1);
-            if (v.getQuantidadeAssentos() == 0) {
-                System.out.println("Voo Lotado!");
-                Menu.menuPrincipal();
-            }
-
-            venda.setVoo(v);
-
-            do {
-                try {
-                    rgCompra = Integer.parseInt(digita("RG do Cliente que realizou a compra: "));
-                    valida = true;
-                } catch (NumberFormatException ex) {
-                    System.out.println("Erro: " + ex);
-                    valida = false;
-                }
-
-            } while (valida == false);
-
-            Cliente listaRG = clDao.listRG(rgCompra);
-
-            venda.setCliente(listaRG);
-
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date date = new Date(System.currentTimeMillis());
-            venda.setHorarioCompra(dateFormat.format(date));
-
-            vdDao.insertVenda(venda);
-
-            System.out.println("\nCompra Realizada com Sucesso!!!");
         }
         Menu.menuPrincipal();
 
