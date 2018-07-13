@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -34,22 +38,94 @@ public class CadastrarClienteController implements Initializable {
     @FXML
     private AnchorPane painelCadastrarCliente;
 
-    private ClienteDAO cDao = new ClienteDAO();
-    private Cliente c = new Cliente();
+    private static boolean verificaRepetido(int rg) throws SQLException {
+        ClienteDAO clDao = new ClienteDAO();
+
+        Cliente c = clDao.listRG(rg);
+
+        boolean rgDuplicado = false;
+
+        if (c.getRg() == rg) {
+            rgDuplicado = true;
+        }
+
+        return rgDuplicado;
+    }
 
     @FXML
     private void efetuarCadastroCliente(ActionEvent event) throws SQLException {
+        ClienteDAO cDao = new ClienteDAO();
+        Cliente c = new Cliente();
         String nome = txbNome.getText();
         Integer rg = Integer.parseInt(txbRg.getText());
         String contato = txbTelefone.getText();
-        
-        if(nome.equals("") || rg.equals("") || contato.equals(""))
-        
-        c.setNome(nome);
-        c.setRg(rg);
-        c.setContato(contato);
-        cDao.insert(c);
 
+        Pattern padrao = Pattern.compile("[0-9]");
+        Matcher combinacao = padrao.matcher(nome);
+
+        Pattern padraoNum = Pattern.compile("[a-zA-Z]");
+        Matcher combinacaoNum = padraoNum.matcher(contato);
+
+        Pattern padraoRG = Pattern.compile("[a-zA-Z]");
+        Matcher combinacaoRG = padraoRG.matcher(txbRg.getText());
+
+        boolean verifica;
+
+        verifica = verificaRepetido(rg);
+
+        if (verifica == true) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("RG já cadastrado! Digite novamente");
+
+            alert.showAndWait();
+
+            txbNome.setText("");
+            txbRg.setText("");
+            txbTelefone.setText("");
+
+        } else if (nome.equals("") || rg.equals("") || contato.equals("")) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Algum campo ficou vazio! Digite novamente");
+
+            alert.showAndWait();
+
+            txbNome.setText("");
+            txbRg.setText("");
+            txbTelefone.setText("");
+
+        } else if (combinacao.find() || combinacaoNum.find() || combinacaoRG.find()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Algum campo digitado incorretamente! Digite novamente");
+
+            alert.showAndWait();
+
+            txbNome.setText("");
+            txbRg.setText("");
+            txbTelefone.setText("");
+
+        } else {
+
+            c.setNome(nome);
+            c.setRg(rg);
+            c.setContato(contato);
+            cDao.insert(c);
+
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Cadastro");
+            alert.setHeaderText(null);
+            alert.setContentText("Cadastro efetuado com sucesso!");
+            alert.showAndWait();
+
+            txbNome.setText("");
+            txbRg.setText("");
+            txbTelefone.setText("");
+        }
     }
 
     @FXML
