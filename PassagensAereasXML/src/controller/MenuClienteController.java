@@ -145,13 +145,12 @@ public class MenuClienteController implements Initializable {
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
         if (cliente != null) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation Dialog");
-            alert.setHeaderText("Look, a Confirmation Dialog");
-            alert.setContentText("Are you ok with this?");
+            alert.setTitle("Delete");
+            alert.setHeaderText(null);
+            alert.setContentText("Deseja mesmo excluir esse cliente?");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                // ... user chose OK
                 cd.delete(cliente);
                 this.loadTableViewClientes();
 
