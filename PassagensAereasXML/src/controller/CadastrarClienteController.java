@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,17 +39,20 @@ public class CadastrarClienteController implements Initializable {
     @FXML
     private AnchorPane painelCadastrarCliente;
 
+    //private Cliente c = null;
     private static boolean verificaRepetido(int rg) throws SQLException {
         ClienteDAO clDao = new ClienteDAO();
 
-        Cliente c = clDao.listRG(rg);
+        List<Cliente> listaDeClientes = clDao.list();
 
+        //Cliente c = clDao.listRG(rg);
         boolean rgDuplicado = false;
 
-        if (c.getRg() == rg) {
-            rgDuplicado = true;
+        for (int i = 0; i < listaDeClientes.size(); i++) {
+            if (listaDeClientes.get(i).getRg() == rg) {
+                rgDuplicado = true;
+            }
         }
-
         return rgDuplicado;
     }
 
@@ -58,6 +62,7 @@ public class CadastrarClienteController implements Initializable {
         Cliente c = new Cliente();
         String nome = txbNome.getText();
         Integer rg = Integer.parseInt(txbRg.getText());
+
         String contato = txbTelefone.getText();
 
         Pattern padrao = Pattern.compile("[0-9]");
@@ -85,7 +90,7 @@ public class CadastrarClienteController implements Initializable {
             txbRg.setText("");
             txbTelefone.setText("");
 
-        } else if (nome.equals("") || rg.equals("") || contato.equals("")) {
+        } else if (nome.isEmpty() || rg.equals("") || contato.isEmpty()) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erro");
             alert.setHeaderText(null);
